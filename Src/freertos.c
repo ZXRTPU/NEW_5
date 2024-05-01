@@ -25,7 +25,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "Ins_task.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -61,7 +61,7 @@ osThreadId ShoottaskHandle;
 /* USER CODE END FunctionPrototypes */
 
 void StartDefaultTask(void const * argument);
-void Ins_task(void const * argument);
+void Ins_task_RTOS(void const * argument);
 void Chassis_task(void const * argument);
 void UI_task(void const * argument);
 void Exchange_task(void const * argument);
@@ -135,7 +135,7 @@ void MX_FREERTOS_Init(void) {
   defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
 
   /* definition and creation of Instask */
-  osThreadDef(Instask, Ins_task, osPriorityNormal, 0, 1024);
+  osThreadDef(Instask, Ins_task_RTOS, osPriorityNormal, 0, 1024);
   InstaskHandle = osThreadCreate(osThread(Instask), NULL);
 
   /* definition and creation of Chassistask */
@@ -184,22 +184,24 @@ void StartDefaultTask(void const * argument)
   /* USER CODE END StartDefaultTask */
 }
 
-/* USER CODE BEGIN Header_Ins_task */
+/* USER CODE BEGIN Header_Ins_task_RTOS */
 /**
 * @brief Function implementing the Instask thread.
 * @param argument: Not used
 * @retval None
 */
-/* USER CODE END Header_Ins_task */
-__weak void Ins_task(void const * argument)
+/* USER CODE END Header_Ins_task_RTOS */
+void Ins_task_RTOS(void const * argument)
 {
-  /* USER CODE BEGIN Ins_task */
+  /* USER CODE BEGIN Ins_task_RTOS */
+	INS_Init();
   /* Infinite loop */
   for(;;)
   {
+		INS_Task();
     osDelay(1);
   }
-  /* USER CODE END Ins_task */
+  /* USER CODE END Ins_task_RTOS */
 }
 
 /* USER CODE BEGIN Header_Chassis_task */
@@ -230,6 +232,7 @@ __weak void Chassis_task(void const * argument)
 __weak void UI_task(void const * argument)
 {
   /* USER CODE BEGIN UI_task */
+
   /* Infinite loop */
   for(;;)
   {

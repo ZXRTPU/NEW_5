@@ -68,7 +68,7 @@ typedef struct
 extern INS_t INS;
 
 void INS_Init(void);
-void Ins_task(void const * argument);
+void INS_Task(void);
 void IMU_Temperature_Ctrl(void);
 
 void QuaternionUpdate(float *q, float gx, float gy, float gz, float dt);
