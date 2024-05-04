@@ -1,5 +1,6 @@
-#include "main.h"
+
 #include "pid.h"
+#include "main.h"
 
 #define LimitMax(input, max)   \
     {                          \
@@ -130,4 +131,3 @@ fp32 pid_calc_trigger(pid_struct_t *pid, fp32 ref, fp32 fdb) // refйгд©╠Йж╣,fdbй
     LimitMax(pid->out, pid->max_out); // ╥юж╧т╫╫Г
     return pid->out;                  // ╣Г╩З╥╣╩ь╣д╠╗ндспв╙кы╨мв╙╬ь╣ГаВё╛╣╚йгж╩дэ╥╒╣Гя╧ж╣(-30000жа30000)
 }
-

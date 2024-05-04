@@ -3292,7 +3292,7 @@ HAL_StatusTypeDef UART_Start_Receive_DMA(UART_HandleTypeDef *huart, uint8_t *pDa
   /* Enable the DMA transfer for the receiver request by setting the DMAR bit
   in the UART CR3 register */
   ATOMIC_SET_BIT(huart->Instance->CR3, USART_CR3_DMAR);
-
+  
   return HAL_OK;
 }
 

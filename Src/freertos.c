@@ -29,10 +29,11 @@
 #include "rc_potocal.h"
 #include "arm_math.h"
 #include "INS_task.h"
+#include "Daemon.h"
 #include "Exchange_task.h"
 #include "Chassis_task.h"
 #include "super_cap.h"
-#include  "UI_task.h"
+//#include  "UI_task.h"
 #include "stm32f4xx_it.h"
 /* USER CODE END Includes */
 
@@ -309,6 +310,7 @@ void StartDaemontask(void const * argument)
   /* Infinite loop */
   for(;;)
   {
+		DaemonTask();
     osDelay(1);
   }
   /* USER CODE END StartDaemontask */

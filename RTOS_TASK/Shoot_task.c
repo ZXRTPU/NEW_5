@@ -6,15 +6,19 @@
 #include "bsp_dwt.h"
 #include <stdbool.h>
 #include <pid.h>
-shooter_t shooter; // 发射机构信息结构体
-// 电机0为拨盘电机，电机1为弹舱盖电机，电机2、3为摩擦轮电机
 #define TRIGGER_SINGLE_ANGLE 1620 // 36*360/8
 
-extern RC_ctrl_t rc_ctrl; // 遥控器信息结构体
+// 电机0为拨盘电机，电机1为弹舱盖电机，电机2、3为摩擦轮电机
+shooter_t shooter; // 发射机构信息结构体
+
+extern RC_ctrl_t rc_ctrl[2]; // 遥控器信息结构体
 bool is_angle_control = false;//单发
 float current_time = 0;
 float last_time = 0;
 uint8_t flag_single=1;
+
+uint8_t friction_flag = 0; // 摩擦轮转速标志位，012分别为low, normal, high, 默认为normal
+
 static void Shooter_Inint();         // 发射机构的初始化
 static void model_choice();          // 模式选择
 static void dial_control();          // 拨盘电机控制
@@ -22,8 +26,9 @@ static void friction_control();      // 摩擦轮电机控制
 static void bay_control();           // 弹舱电机控制
 static void shooter_current_given(); // 给电流
 
-// 单发-拨盘旋转固定角度
+// 单发
 static void trigger_single_angle_move();
+//堵转时拨盘反转
 static void shoot_reverse();
 
 void Shoot_task(void const * argument)
@@ -69,94 +74,45 @@ static void model_choice(void)
     // 取消注释开始发射
     bay_control();
     // 取消注释开始发射
-    if (rc_ctrl.rc.s[1] == 3 || rc_ctrl.rc.s[1] == 1)
+    if (rc_ctrl[TEMP].rc.switch_left == 3 || rc_ctrl[TEMP].rc.switch_left == 1)
     {
         // 发射
         friction_control();
-        // dial_control();
-        // 右拨杆中，键鼠控制
-        if (rc_ctrl.rc.s[0] == 3)
+        
+			  //单发
+        if (rc_ctrl[TEMP].rc.switch_right == 3)
         {
-            // 单发，鼠标控制
             if (flag_single)
             {
-                // HAL_Delay(5000);
-                is_angle_control = true;
                 trigger_single_angle_move();
+							  is_angle_control = true;
                 flag_single=0;
             }
-            
-            // else if (z_flag)
-            // {
-            //     is_angle_control = false;
-            //     shoot_reverse();
-            // }
         }
-
-        // 右拨杆下，遥控器控制
-        // else
-        else if (rc_ctrl.rc.s[1] ==1)
+				//左杆上，连发
+        else if (rc_ctrl[TEMP].rc.switch_left ==1)
         {
-            dial_control();
+            shooter.dial_speed_target = 2000;
             is_angle_control = false;
         }
-        else if (rc_ctrl.rc.s[0] == 2)
+				//单发重置
+        else if (rc_ctrl[TEMP].rc.switch_right == 2)
         {
             flag_single=1;
-        //     // 左拨杆上，电机启动
-        //     if (rc_ctrl.rc.s[1] == 1)
-        //     {
-                // is_angle_control = false;
-        //         // shoot_start();
-        //         shooter.dial_speed_target = 2000;
-        //     }
-        //     else
-        //     {
-        //         // shoot_stop();
-        //         shooter.dial_speed_target = 0;
-        //     }
         }
     }
+		
     else
     {
         shooter.dial_speed_target = 0;
         shooter.motor_info[0].set_current=0;
-            shooter.bay_speed_target = 0;
+        shooter.bay_speed_target = 0;
         // 停止
         shooter.friction_speed_target[0] = 0;
         shooter.friction_speed_target[1] = 0;
     }
 }
 
-// 拨盘电机控制
-static void dial_control(void)
-{
-    if (rc_ctrl.rc.s[1] == 1)
-    {
-        LEDR_OFF();
-        shooter.dial_speed_target = 2000;
-    }
-    else
-    {
-        shooter.dial_speed_target = 0;
-    }
-
-    // if (rc_ctrl.rc.s[0] == 3)
-    // {
-        // 单发，鼠标控制
-    // if (rc_ctrl.rc.s[0] == 3) // press_left
-    // {
-    //     is_angle_control = true;
-    //     trigger_single_angle_move();
-    //     HAL_Delay(5000);
-    //     }
-    //     else if (z_flag)
-    //     {
-    //         is_angle_control = false;
-    //         shoot_reverse();
-    //     }
-    // }
-}
 
 // 摩擦轮电机控制
 static void friction_control(void)

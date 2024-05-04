@@ -15,12 +15,13 @@
 
 void CAN1_Init(void);
 void CAN2_Init(void);
-void can_remote(uint8_t sbus_buf[], uint8_t can_send_id);
 
 void set_motor_current_chassis(uint8_t id_range, int16_t v1, int16_t v2, int16_t v3, int16_t v4);
 void set_motor_current_gimbal(uint8_t id_range, int16_t v1, int16_t v2, int16_t v3, int16_t v4);
 void set_motor_current_gimbal2(uint8_t id_range, int16_t v1, int16_t v2, int16_t v3, int16_t v4);
 void set_motor_current_shoot(uint8_t id_range, int16_t v1, int16_t v2, int16_t v3, int16_t v4);
 void set_curruent(uint32_t motor_range, CAN_HandleTypeDef can_id, int16_t v1, int16_t v2, int16_t v3, int16_t v4);
+void can_remote(uint8_t sbus_buf[], uint32_t can_send_id, uint32_t len);
+void process_MotorInfo(motor_info_t *motor_info, uint8_t *rx_data);
 
 #endif

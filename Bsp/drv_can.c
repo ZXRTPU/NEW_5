@@ -1,10 +1,11 @@
 #include "drv_can.h"
+#include "remote_control.h"
 #define RC_CH_VALUE_OFFSET ((uint16_t)1024)
 #define ECD_ANGLE_COEF 0.043945f // (360/8192),将编码器值转化为角度制
 
 extern CAN_HandleTypeDef hcan1;
 extern CAN_HandleTypeDef hcan2;
-extern RC_ctrl_t rc_ctrl;
+extern RC_ctrl_t rc_ctrl[2];
 uint16_t can_cnt_1 = 0;
 float Yaw_down;
 extern gimbal_t gimbal_Yaw, gimbal_Pitch;
@@ -65,63 +66,62 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan) // 接受中断�
   {
     uint8_t rx_data[8];
     HAL_CAN_GetRxMessage(hcan, CAN_RX_FIFO0, &rx_header, rx_data); // receive can1 data
-    if (rx_header.StdId == 0x55)                                   // 上C向下C传IMU数据
+//    if (rx_header.StdId == 0x55)                                   // 上C向下C传IMU数据
+//    {
+//    }
+		
+		// 接收下DM传来的遥控器数据
+    if (rx_header.StdId == 0x33) 
     {
+       rc_ctrl[TEMP].rc.rocker_r_ = ((rx_data[0] | (rx_data[1] << 8)) & 0x07ff) - RC_CH_VALUE_OFFSET;                                       //!< Channel 0
+       rc_ctrl[TEMP].rc.rocker_r1 = ((((rx_data[1] >> 3) & 0xff) | (rx_data[2] << 5)) & 0x07ff) - RC_CH_VALUE_OFFSET;                       //!< Channel 1
+       rc_ctrl[TEMP].rc.rocker_l_ = ((((rx_data[2] >> 6) & 0xff) | (rx_data[3] << 2) | (rx_data[4] << 10)) & 0x07ff) - RC_CH_VALUE_OFFSET; //!< Channel 2
+       rc_ctrl[TEMP].rc.rocker_l1 = ((((rx_data[4] >> 1) & 0xff) | (rx_data[5] << 7)) & 0x07ff) - RC_CH_VALUE_OFFSET;                       //!< Channel 3
+                            // 左侧拨轮
+       RectifyRCjoystick();
+			 rc_ctrl[TEMP].rc.switch_right = ((rx_data[5] >> 4) & 0x0003);     //!< Switch right
+       rc_ctrl[TEMP].rc.switch_left = ((rx_data[5] >> 4) & 0x000C) >> 2; //!< Switch left
+       
+       // 鼠标解析
+       rc_ctrl[TEMP].mouse.x = (rx_data[6] | (rx_data[7] << 8)); //!< Mouse X axis
     }
-    if (rx_header.StdId == 0x33) // 接收上C传来的遥控器数据
+    // 接收下DM传来的遥控器数据
+    if (rx_header.StdId == 0x34) 
     {
-      rc_ctrl.rc.ch[0] = ((rx_data[0] | (rx_data[1] << 8)) & 0x07ff);                                      //!< Channel 0  ÖÐÖµÎª1024£¬×î´óÖµ1684£¬×îÐ¡Öµ364£¬²¨¶¯·¶Î§£º660
-      rc_ctrl.rc.ch[1] = ((((rx_data[1] >> 3) & 0xff) | (rx_data[2] << 5)) & 0x07ff);                      //!< Channel 1
-      rc_ctrl.rc.ch[2] = ((((rx_data[2] >> 6) & 0xff) | (rx_data[3] << 2) | (rx_data[4] << 10)) & 0x07ff); //!< Channel 2
-      rc_ctrl.rc.ch[3] = ((((rx_data[4] >> 1) & 0xff) | (rx_data[5] << 7)) & 0x07ff);                      //!< Channel 3
-      rc_ctrl.rc.s[0] = ((rx_data[5] >> 4) & 0x0003);                                                      //!< Switch left£¡£¡£¡ÕâÄáÂêÊÇÓÒ
-      rc_ctrl.rc.s[1] = ((rx_data[5] >> 4) & 0x000C) >> 2;                                                 //!< Switch right£¡£¡£¡Õâ²ÅÊÇ×ó
-      rc_ctrl.mouse.x = rx_data[6] | (rx_data[7] << 8);                                                    //!< Mouse X axis
-      rc_ctrl.rc.ch[0] -= RC_CH_VALUE_OFFSET;
-      rc_ctrl.rc.ch[1] -= RC_CH_VALUE_OFFSET;
-      rc_ctrl.rc.ch[2] -= RC_CH_VALUE_OFFSET;
-      rc_ctrl.rc.ch[3] -= RC_CH_VALUE_OFFSET;
-    }
-
-    if (rx_header.StdId == 0x34) // 接收上C传来的遥控器数据
-    {
-      rc_ctrl.mouse.y = rx_data[0] | (rx_data[1] << 8); //!< Mouse Y axis
-      rc_ctrl.mouse.z = rx_data[2] | (rx_data[3] << 8); //!< Mouse Z axis
-      rc_ctrl.mouse.press_l = rx_data[4];               //!< Mouse Left Is Press ?
-      rc_ctrl.mouse.press_r = rx_data[5];               //!< Mouse Right Is Press ?
-      rc_ctrl.key.v = rx_data[6] | (rx_data[7] << 8);   //!< KeyBoard value
+      rc_ctrl[TEMP].mouse.y= rx_data[0] | (rx_data[1] << 8); //!< Mouse Y axis
+      rc_ctrl[TEMP].mouse.z= rx_data[2] | (rx_data[3] << 8); //!< Mouse Z axis
+      rc_ctrl[TEMP].mouse.press_l= rx_data[4];               //!< Mouse Left Is Press ?
+      rc_ctrl[TEMP].mouse.press_r = rx_data[5];               //!< Mouse Right Is Press ?
+      rc_ctrl[TEMP].key[0].v = rx_data[6] | (rx_data[7] << 8);   //!< KeyBoard value
 
       // Some flag of keyboard
-      w_flag = (rx_data[6] & 0x01);
-      s_flag = (rx_data[6] & 0x02);
-      a_flag = (rx_data[6] & 0x04);
-      d_flag = (rx_data[6] & 0x08);
-      q_flag = (rx_data[6] & 0x40);
-      e_flag = (rx_data[6] & 0x80);
-      shift_flag = (rx_data[6] & 0x10);
-      ctrl_flag = (rx_data[6] & 0x20);
-      press_left = rc_ctrl.mouse.press_l;
-      press_right = rc_ctrl.mouse.press_r;
-      r_flag = rc_ctrl.key.v & (0x00 | 0x01 << 8);
-      f_flag = rc_ctrl.key.v & (0x00 | 0x02 << 8);
-      g_flag = rc_ctrl.key.v & (0x00 | 0x04 << 8);
-      z_flag = rc_ctrl.key.v & (0x00 | 0x08 << 8);
-      x_flag = rc_ctrl.key.v & (0x00 | 0x10 << 8);
-      c_flag = rc_ctrl.key.v & (0x00 | 0x20 << 8);
-      v_flag = rc_ctrl.key.v & (0x00 | 0x40 << 8);
-      b_flag = rc_ctrl.key.v & (0x00 | 0x80 << 8);
+//      w_flag = (rx_data[6] & 0x01);
+//      s_flag = (rx_data[6] & 0x02);
+//      a_flag = (rx_data[6] & 0x04);
+//      d_flag = (rx_data[6] & 0x08);
+//      q_flag = (rx_data[6] & 0x40);
+//      e_flag = (rx_data[6] & 0x80);
+//      shift_flag = (rx_data[6] & 0x10);
+//      ctrl_flag = (rx_data[6] & 0x20);
+//      press_left = rc_ctrl[TEMP].mouse.press_l;
+//      press_right = rc_ctrl[TEMP].mouse.press_r;
+//      r_flag = rc_ctrl[TEMP].key[0].v & (0x00 | 0x01 << 8);
+//      f_flag = rc_ctrl[TEMP].key[0].v & (0x00 | 0x02 << 8);
+//      g_flag = rc_ctrl[TEMP].key[0].v & (0x00 | 0x04 << 8);
+//      z_flag = rc_ctrl[TEMP].key[0].v & (0x00 | 0x08 << 8);
+//      x_flag = rc_ctrl[TEMP].key[0].v & (0x00 | 0x10 << 8);
+//      c_flag = rc_ctrl[TEMP].key[0].v & (0x00 | 0x20 << 8);
+//      v_flag = rc_ctrl[TEMP].key[0].v & (0x00 | 0x40 << 8);
+//      b_flag = rc_ctrl[TEMP].key[0].v & (0x00 | 0x80 << 8);
     }
-
+		//接收下DM传来的底盘陀螺仪数据
     if (rx_header.StdId == 0x35)
     {
-      rc_ctrl.rc.ch[4] = ((rx_data[0] | (rx_data[1] << 8)) & 0x07ff) - RC_CH_VALUE_OFFSET;
+      rc_ctrl[TEMP].rc.dial = ((rx_data[0] | (rx_data[1] << 8)) & 0x07ff) - RC_CH_VALUE_OFFSET;
       Yaw_down = ((int16_t)((rx_data[2] << 8) | rx_data[3])) / 100.0f; // yaw
-      // // INS_top.Roll = ((int16_t)((rx_data[4] << 8) | rx_data[5])) / 100;  // roll（roll和pitch根据c放置位置不同可能交换）
-      // // INS_top.Pitch = ((int16_t)((rx_data[6] << 8) | rx_data[7])) / 100; // pitch
-      // vision_Vx = ((int16_t)((rx_data[4] << 8) | rx_data[5])) / 100; // 导航所需Vx
-      // vision_Vy = ((int16_t)((rx_data[6] << 8) | rx_data[7])) / 100; // 导航所需Vy
     }
-    // 云台电机信息接收
+		
+    // 云台YAW电机信息接收
     if (rx_header.StdId == 0x209) // 判断标识符，标识符为0x204+ID
     {
       gimbal_Yaw.motor_info.rotor_angle = ((rx_data[0] << 8) | rx_data[1]);
@@ -129,44 +129,14 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan) // 接受中断�
       gimbal_Yaw.motor_info.torque_current = ((rx_data[4] << 8) | rx_data[5]);
       gimbal_Yaw.motor_info.temp = rx_data[6];
     }
-
-    // // 云台电机信息接收
-    // if (rx_header.StdId == 0x20b) // 判断标识符，标识符为0x204+ID
-    // {
-    //   gimbal_Pitch.motor_info.rotor_angle = ((rx_data[0] << 8) | rx_data[1]);
-    //   gimbal_Pitch.motor_info.rotor_speed = ((rx_data[2] << 8) | rx_data[3]);
-    //   gimbal_Pitch.motor_info.torque_current = ((rx_data[4] << 8) | rx_data[5]);
-    //   gimbal_Pitch.motor_info.temp = rx_data[6];
-    // }
-    // 底盤电机信息接收
-    // if ((rx_header.StdId >= 0x201)     // 201-204
-    //     && (rx_header.StdId <= 0x204)) // 判断标识符，标识符为0x200+ID
-    // {
-    //   uint8_t index = rx_header.StdId - 0x201; // get motor index by can_id
-    //   chassis.motor_info[index].rotor_angle = ((rx_data[0] << 8) | rx_data[1]);
-    //   chassis.motor_info[index].rotor_speed = ((rx_data[2] << 8) | rx_data[3]);
-    //   chassis.motor_info[index].torque_current = ((rx_data[4] << 8) | rx_data[5]);
-    //   chassis.motor_info[index].temp = rx_data[6];
-    //   if (index == 0)
-    //   {
-    //     can_cnt_1++;
-    //   }
-    // }
   }
-  // 电机信息接收
+	
   if (hcan->Instance == CAN2)
   {
     uint8_t rx_data[8];
     HAL_CAN_GetRxMessage(hcan, CAN_RX_FIFO0, &rx_header, rx_data); // receive can2 data
-    // if (rx_header.StdId == 0x209)                                  // 判断标识符，标识符为0x204+ID
-    // {
-    //   gimbal_Yaw.motor_info.rotor_angle = ((rx_data[0] << 8) | rx_data[1]);
-    //   gimbal_Yaw.motor_info.rotor_speed = ((rx_data[2] << 8) | rx_data[3]);
-    //   gimbal_Yaw.motor_info.torque_current = ((rx_data[4] << 8) | rx_data[5]);
-    //   gimbal_Yaw.motor_info.temp = rx_data[6];
-    // }
 
-    // 發射機構电机信息接收
+    // 发射机构电机信息接收
     if ((rx_header.StdId >= 0x205)     // 205-208
         && (rx_header.StdId <= 0x208)) // 判断标识符，标识符为0x200+ID
     {
@@ -191,7 +161,7 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan) // 接受中断�
         can_cnt_1++;
       }
     }
-    // 云台电机信息接收
+    // 云台PITCH电机信息接收
     if (rx_header.StdId == 0x20b) // 判断标识符，标识符为0x204+ID
     {
       gimbal_Pitch.motor_info.rotor_angle = ((rx_data[0] << 8) | rx_data[1]);
@@ -200,6 +170,7 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan) // 接受中断�
       gimbal_Pitch.motor_info.temp = rx_data[6];
     }
 
+		//超级电容信息接收
     if (rx_header.StdId == 0x211)
     {
 
@@ -214,19 +185,7 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan) // 接受中断�
   }
 }
 
-void can_remote(uint8_t sbus_buf[], uint8_t can_send_id) // 调用can来发送遥控器数据
-{
-  CAN_TxHeaderTypeDef tx_header;
-
-  tx_header.StdId = can_send_id; // 如果id_range==0则等于0x1ff,id_range==1则等于0x2ff（ID号）
-  tx_header.IDE = CAN_ID_STD;    // 标准帧
-  tx_header.RTR = CAN_RTR_DATA;  // 数据帧
-  tx_header.DLC = 8;             // 发送数据长度（字节）
-
-   HAL_CAN_AddTxMessage(&hcan1, &tx_header, sbus_buf, (uint32_t *)CAN_TX_MAILBOX0);
-}
-
-// 底盤電機控制
+// 3508电机控制-CAN1
 void set_motor_current_chassis(uint8_t id_range, int16_t v1, int16_t v2, int16_t v3, int16_t v4)
 {
   CAN_TxHeaderTypeDef tx_header;
@@ -249,7 +208,7 @@ void set_motor_current_chassis(uint8_t id_range, int16_t v1, int16_t v2, int16_t
   HAL_CAN_AddTxMessage(&hcan1, &tx_header, tx_data, (uint32_t *)CAN_TX_MAILBOX0);
 }
 
-// 雲臺電機控制
+// 6020电机控制-CAN1
 void set_motor_current_gimbal(uint8_t id_range, int16_t v1, int16_t v2, int16_t v3, int16_t v4)
 {
   CAN_TxHeaderTypeDef tx_header;
@@ -272,7 +231,7 @@ void set_motor_current_gimbal(uint8_t id_range, int16_t v1, int16_t v2, int16_t 
   HAL_CAN_AddTxMessage(&hcan1, &tx_header, tx_data, (uint32_t *)CAN_TX_MAILBOX0);
 }
 
-// 雲臺電機控制 -- CAN2
+// 6020电机控制-CAN2
 void set_motor_current_gimbal2(uint8_t id_range, int16_t v1, int16_t v2, int16_t v3, int16_t v4)
 {
   CAN_TxHeaderTypeDef tx_header;
@@ -295,7 +254,7 @@ void set_motor_current_gimbal2(uint8_t id_range, int16_t v1, int16_t v2, int16_t
   HAL_CAN_AddTxMessage(&hcan2, &tx_header, tx_data, (uint32_t *)CAN_TX_MAILBOX0);
 }
 
-// 發射機構電機控制
+// 3508电机控制-CAN2
 void set_motor_current_shoot(uint8_t id_range, int16_t v1, int16_t v2, int16_t v3, int16_t v4)
 {
   CAN_TxHeaderTypeDef tx_header;
@@ -340,3 +299,30 @@ void set_curruent(uint32_t motor_range, CAN_HandleTypeDef can_id, int16_t v1, in
   tx_data[7] = (v4) & 0xff;
   HAL_CAN_AddTxMessage(&can_id, &tx_header, tx_data, (uint32_t *)CAN_TX_MAILBOX0);
 }
+
+// 向C板发送数据
+void can_remote(uint8_t sbus_buf[], uint32_t can_send_id, uint32_t len) // 调用can来发送遥控器数据
+{
+  CAN_TxHeaderTypeDef tx_header;
+
+  tx_header.StdId = can_send_id;                       // 如果id_range==0则等于0x1ff,id_range==1则等于0x2ff（ID号）
+  tx_header.IDE = CAN_ID_STD;                          // 标准帧
+  tx_header.RTR = CAN_RTR_DATA;                        // 数据帧
+  tx_header.DLC = len;                                   // 发送数据长度（字节）
+  while (HAL_CAN_GetTxMailboxesFreeLevel(&hcan2) == 0) // 等待邮箱空闲
+  {
+  }
+  HAL_CAN_AddTxMessage(&hcan2, &tx_header, sbus_buf, (uint32_t *)CAN_TX_MAILBOX0);
+}
+
+//void can_remote(uint8_t sbus_buf[], uint8_t can_send_id) // 调用can来发送遥控器数据
+//{
+//  CAN_TxHeaderTypeDef tx_header;
+
+//  tx_header.StdId = can_send_id; // 如果id_range==0则等于0x1ff,id_range==1则等于0x2ff（ID号）
+//  tx_header.IDE = CAN_ID_STD;    // 标准帧
+//  tx_header.RTR = CAN_RTR_DATA;  // 数据帧
+//  tx_header.DLC = 8;             // 发送数据长度（字节）
+
+//   HAL_CAN_AddTxMessage(&hcan1, &tx_header, sbus_buf, (uint32_t *)CAN_TX_MAILBOX0);
+//}

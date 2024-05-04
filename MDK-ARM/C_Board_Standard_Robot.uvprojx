@@ -48,7 +48,7 @@
             <NotGenerated>0</NotGenerated>
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
-          <OutputDirectory>C_Board_Standard_Robot\</OutputDirectory>
+          <OutputDirectory>.\C_Board_Standard_Robot\</OutputDirectory>
           <OutputName>C_Board_Standard_Robot</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
@@ -81,7 +81,7 @@
           </BeforeMake>
           <AfterMake>
             <RunUserProg1>0</RunUserProg1>
-            <RunUserProg2>1</RunUserProg2>
+            <RunUserProg2>0</RunUserProg2>
             <UserProg1Name></UserProg1Name>
             <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
@@ -134,11 +134,11 @@
             <RunIndependent>0</RunIndependent>
             <UpdateFlashBeforeDebugging>1</UpdateFlashBeforeDebugging>
             <Capability>1</Capability>
-            <DriverSelection>4107</DriverSelection>
+            <DriverSelection>4101</DriverSelection>
           </Flash1>
           <bUseTDR>1</bUseTDR>
           <Flash2>STLink\ST-LINKIII-KEIL_SWO.dll</Flash2>
-          <Flash3></Flash3>
+          <Flash3>"" ()</Flash3>
           <Flash4></Flash4>
           <pFcarmOut></pFcarmOut>
           <pFcarmGrp></pFcarmGrp>
@@ -336,7 +336,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>USE_HAL_DRIVER,STM32F407xx,USE_HAL_DRIVER,STM32F407xx,ARM_MATH_CM4,__FPU_USED=1U,__FPU_PRESENT=1U,__CC_ARM,ARM_MATH_MATRIX_CHECK,ARM_MATH_ROUNDING</Define>
+              <Define>USE_HAL_DRIVER,STM32F407xx,USE_HAL_DRIVER,STM32F407xx,ARM_MATH_CM4,__FPU_USED=1U,__FPU_PRESENT=1U,__CC_ARM,ARM_MATH_MATRIX_CHECK,ARM_MATH_ROUNDING,VISION_USE_VCP</Define>
               <Undefine></Undefine>
               <IncludePath>../Inc;../Src;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Middlewares/Third_Party/FreeRTOS/Source/include;../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS;../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F;../Middlewares/ST/STM32_USB_Device_Library/Core/Inc;../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Drivers/CMSIS/Include;../Drivers/CMSIS/DSP/Include;../Bsp;../User/Algorithm;../User/BMI088;../User/Daemon;../User/Judge_system;../User/miniPC;../User/RC_device;../User/VideoTransmitter;../RTOS_TASK</IncludePath>
             </VariousControls>
@@ -3274,14 +3274,29 @@
               <FilePath>..\Bsp\drv_usart.h</FilePath>
             </File>
             <File>
+              <FileName>bsp_usart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Bsp\bsp_usart.c</FilePath>
+            </File>
+            <File>
               <FileName>bsp_usart.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\Bsp\bsp_usart.h</FilePath>
             </File>
             <File>
-              <FileName>bsp_usart.c</FileName>
+              <FileName>bsp_init.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Bsp\bsp_init.h</FilePath>
+            </File>
+            <File>
+              <FileName>bsp_usb.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Bsp\bsp_usb.h</FilePath>
+            </File>
+            <File>
+              <FileName>bsp_usb.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\Bsp\bsp_usart.c</FilePath>
+              <FilePath>..\Bsp\bsp_usb.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -3454,14 +3469,9 @@
               <FilePath>..\User\Judge_system\crc_ref.c</FilePath>
             </File>
             <File>
-              <FileName>judge.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\User\Judge_system\judge.c</FilePath>
-            </File>
-            <File>
-              <FileName>judge.h</FileName>
+              <FileName>referee_protocol.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\User\Judge_system\judge.h</FilePath>
+              <FilePath>..\User\Judge_system\referee_protocol.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3493,10 +3503,32 @@
               <FileType>5</FileType>
               <FilePath>..\User\RC_device\rc_potocal.h</FilePath>
             </File>
+            <File>
+              <FileName>remote_control.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\User\RC_device\remote_control.h</FilePath>
+            </File>
+            <File>
+              <FileName>remote_control.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\User\RC_device\remote_control.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
           <GroupName>User/VideoTransmitter</GroupName>
+          <Files>
+            <File>
+              <FileName>VideoTransmitter.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\User\VideoTransmitter\VideoTransmitter.h</FilePath>
+            </File>
+            <File>
+              <FileName>VideoTransmitter.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\User\VideoTransmitter\VideoTransmitter.c</FilePath>
+            </File>
+          </Files>
         </Group>
         <Group>
           <GroupName>RTOS_TASK</GroupName>
@@ -3552,14 +3584,14 @@
               <FilePath>..\RTOS_TASK\Exchange_task.c</FilePath>
             </File>
             <File>
-              <FileName>robot_ref.c</FileName>
+              <FileName>robot_def.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\RTOS_TASK\robot_ref.c</FilePath>
+              <FilePath>..\RTOS_TASK\robot_def.c</FilePath>
             </File>
             <File>
-              <FileName>robot_ref.h</FileName>
+              <FileName>robot_def.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\RTOS_TASK\robot_ref.h</FilePath>
+              <FilePath>..\RTOS_TASK\robot_def.h</FilePath>
             </File>
           </Files>
         </Group>

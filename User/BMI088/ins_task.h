@@ -46,6 +46,8 @@ typedef struct
     float Roll;
     float Pitch;
     float Yaw;
+		float yaw_init;
+		float yaw_update;
     float YawTotalAngle;
 } INS_t;
 
