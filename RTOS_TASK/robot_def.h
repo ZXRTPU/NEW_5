@@ -21,13 +21,10 @@
  */
 typedef enum
 {
-    CHASSIS_FAST = 0, // 底盘转速快
-    CHASSIS_MEDIUM,   // 底盘转速中等
-    CHASSIS_SLOW,     // 底盘转速慢
 	  CHASSIS_ZERO_FORCE = 0,    // 电流零输入
-	  CHASSIS_GYRO,            // 小陀螺模式
     CHASSIS_NO_FOLLOW,         // 不跟随，允许全向平移
     CHASSIS_FOLLOW_GIMBAL_YAW, // 跟随模式，底盘叠加角度环控制
+	  CHASSIS_GYRO,            // 小陀螺模式
 } chassis_mode_e;
 
 // 云台模式设置

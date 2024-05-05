@@ -1,5 +1,8 @@
 #include "drv_can.h"
 #include "remote_control.h"
+#include "string.h"
+#include "miniPC_process.h"
+#include "VideoTransmitter.h"
 #define RC_CH_VALUE_OFFSET ((uint16_t)1024)
 
 extern CAN_HandleTypeDef hcan1;
@@ -13,6 +16,11 @@ int16_t UP_Pitch;
 int16_t UP_Yaw;
 float gimbal_Yaw;
 float gimbal_Pitch;
+extern uint8_t vision_is_tracking;
+uint8_t friction_mode;
+
+static uint8_t sbus_buf[18u]; // 遥控器接收的buffer
+static uint8_t video_buf[12]; // 图传接收的buffer
 
 uint16_t can_cnt_1 = 0;
 
@@ -73,14 +81,6 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan) // 接受中断�
     uint8_t rx_data[8];
     HAL_CAN_GetRxMessage(hcan, CAN_RX_FIFO0, &rx_header, rx_data);
 		
-//		//接收上C板传来的YAW轴陀螺仪数据
-//    if (rx_header.StdId == 0x388)                               
-//    {
-//      UP_Roll= ((rx_data[1] << 8) | rx_data[0]);
-//      UP_Pitch=((rx_data[3] << 8) | rx_data[2]);
-//      UP_Yaw=((rx_data[5] << 8) | rx_data[4]);//下面的
-//      Gimbal_Yaw=UP_Yaw/100.00;//小数部分
-//    }
 
     // 底盘电机信息接收
     if ((rx_header.StdId >= 0x201)     // 201-204
@@ -96,26 +96,8 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan) // 接受中断�
         can_cnt_1++;
       }
     }
-  }
-	
-  if (hcan->Instance == CAN1)
-  {
-    uint8_t rx_data[8];
-    HAL_CAN_GetRxMessage(hcan, CAN_RX_FIFO0, &rx_header, rx_data); 
-    
-		// 接收上C板传来的陀螺仪数据
-		if (rx_header.StdId == 0x55) 
+		    if (rx_header.StdId == 0x211)
     {
-       UP_Roll= ((rx_data[1] << 8) | rx_data[0]);
-       UP_Pitch=((rx_data[3] << 8) | rx_data[2]);
-       UP_Yaw=((rx_data[5] << 8) | rx_data[4]);//下面的
-  		 gimbal_Yaw=UP_Yaw/100.00;//小数部分
-			 gimbal_Pitch = UP_Pitch/100.00;
-    }
-    
-    if (rx_header.StdId == 0x211)
-    {
-
       extern float powerdata[4];
       uint16_t *pPowerdata = (uint16_t *)rx_data;
 
@@ -123,9 +105,48 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan) // 接受中断�
       powerdata[1] = (float)pPowerdata[1] / 100.f; // 电容电压
       powerdata[2] = (float)pPowerdata[2] / 100.f; // 输入电流
       powerdata[3] = (float)pPowerdata[3] / 100.f; // P
+  }
+	
+  if (hcan->Instance == CAN1)
+  {
+    uint8_t rx_data[8];
+    HAL_CAN_GetRxMessage(hcan, CAN_RX_FIFO0, &rx_header, rx_data); 
+		
+		// 接收上C板传来的陀螺仪数据
+		if (rx_header.StdId == 0x55) 
+    { 
+			memcpy(sbus_buf + 16, rx_data, 2);
+      //sbus_to_rc(sbus_buf);
+      UP_Yaw = (int16_t)((rx_data[2] << 8) | rx_data[3]) / 50.0f;
+      UP_Pitch = (int16_t)((rx_data[4] << 8) | rx_data[5]) / 50.0f;
+			gimbal_Yaw=UP_Yaw;//小数部分
+		  gimbal_Pitch = UP_Pitch;
+      vision_is_tracking = rx_data[6];
+      friction_mode = rx_data[7];
+    }
+		
+		if (rx_header.StdId == 0x36) // 接收上C传来的图传数据
+    {
+      memcpy(video_buf, rx_data, 8);
+    }
+
+    if (rx_header.StdId == 0x37) // 接收上C传来的图传数据
+    {
+      memcpy(video_buf + 8, rx_data, 4);
+      VideoRead(video_buf);
+      gimbal_Pitch = (int16_t)((rx_data[4] << 8) | rx_data[5]) / 50.0f;
+      gimbal_Yaw = (int16_t)((rx_data[6] << 8) | rx_data[7]) / 50.0f;
+    }
+
+    if (rx_header.StdId == 0x38) // 接收上C传来的图传数据
+    {
+      vision_is_tracking = rx_data[0];
+      friction_mode = rx_data[1];
     }
   }
 }
+}
+
 
 // 向C板发送数据
 void can_remote(uint8_t sbus_buf[], uint32_t can_send_id, uint32_t len) // 调用can来发送遥控器数据

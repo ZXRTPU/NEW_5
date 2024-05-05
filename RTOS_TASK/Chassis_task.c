@@ -223,6 +223,10 @@ static void mode_chooce()
         //manual_yaw_correct(); // 手动校正yaw值，头对正，按下V键
         chassis_rc_mode();
         break;
+			
+			case CHASSIS_GYRO:
+        chassis_gyro_mode();
+        break;
 
       // 停止模式
       case CHASSIS_ZERO_FORCE:
@@ -250,7 +254,7 @@ static void read_keyboard()
 			ui_data.chassis_mode = CHASSIS_GYRO;
     else
       ui_data.chassis_mode = CHASSIS_ZERO_FORCE; // stop
-
+    
     // C键控制超级电容
     if (rc_ctrl[TEMP].key_count[KEY_PRESS][Key_C] % 2 == 1)
     {

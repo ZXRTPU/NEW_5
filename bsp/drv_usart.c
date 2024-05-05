@@ -14,20 +14,20 @@ uint8_t usart3_dma_rxbuf[2][USART3_RX_BUF_LEN];
 volatile uint8_t judge_dma_buffer[2][UART5_RX_BUF_LEN] ={0}  ;
 uint8_t judge_receive_length=0;
 
-void USART3_Init(void)
-{
-	__HAL_UART_CLEAR_IDLEFLAG(&huart3);       //清除空闲中断标志位，，防止开启中断时立马进入中断
-	__HAL_UART_ENABLE_IT(&huart3, UART_IT_IDLE); //使能空闲中断
-	
-	// Enable the DMA transfer for the receiver request
-	SET_BIT(huart3.Instance->CR3, USART_CR3_DMAR);	//将串口对应的DMA打开
-	
-	DMAEx_MultiBufferStart_NoIT(huart3.hdmarx, \
-							    (uint32_t)&huart3.Instance->DR, \
-							    (uint32_t)usart3_dma_rxbuf[0], \
-							    (uint32_t)usart3_dma_rxbuf[1], \
-							    USART3_RX_DATA_FRAME_LEN);     //开启DMA双缓冲模式
-}
+//void USART3_Init(void)
+//{
+//	__HAL_UART_CLEAR_IDLEFLAG(&huart3);       //清除空闲中断标志位，，防止开启中断时立马进入中断
+//	__HAL_UART_ENABLE_IT(&huart3, UART_IT_IDLE); //使能空闲中断
+//	
+//	// Enable the DMA transfer for the receiver request
+//	SET_BIT(huart3.Instance->CR3, USART_CR3_DMAR);	//将串口对应的DMA打开
+//	
+//	DMAEx_MultiBufferStart_NoIT(huart3.hdmarx, \
+//							    (uint32_t)&huart3.Instance->DR, \
+//							    (uint32_t)usart3_dma_rxbuf[0], \
+//							    (uint32_t)usart3_dma_rxbuf[1], \
+//							    USART3_RX_DATA_FRAME_LEN);     //开启DMA双缓冲模式
+//}
 
 void DRV_USART3_IRQHandler(UART_HandleTypeDef *huart)  //在stm32f4xx_it.c文件USART3_IRQHandler调用
 {

@@ -1,5 +1,7 @@
 #include "struct_typedef.h"
-void exchange_task();
+
+void Exchange_task(void const * argument);
+
 typedef struct INS_DATA
 {
     fp32 accel_offset[3];

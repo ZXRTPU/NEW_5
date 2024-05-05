@@ -29,7 +29,9 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "bsp_dwt.h"
+#include "drv_can.h"
+#include "drv_usart.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -111,7 +113,12 @@ int main(void)
   /* Initialize interrupts */
   MX_NVIC_Init();
   /* USER CODE BEGIN 2 */
-
+    UART5_Init();
+    //USART3_Init();
+    CAN1_Init();
+    CAN2_Init();
+    HAL_TIM_PWM_Start(&htim3,TIM_CHANNEL_1);//??????TIM3????????¡§PWM?????? 
+  DWT_Init(168);
   /* USER CODE END 2 */
 
   /* Call init function for freertos objects (in cmsis_os2.c) */

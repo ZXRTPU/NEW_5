@@ -45,3 +45,9 @@ nb\drv_can.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd_ex.h
 nb\drv_can.o: ../Inc/gpio.h
 nb\drv_can.o: ../User/RC_device/remote_control.h
 nb\drv_can.o: ../Inc/usart.h
+nb\drv_can.o: D:\Keil-APPINSTALL\ARM\ARMCC\Bin\..\include\string.h
+nb\drv_can.o: ../User/miniPC/miniPC_process.h
+nb\drv_can.o: ../bsp/bsp_usart.h
+nb\drv_can.o: D:\Keil-APPINSTALL\ARM\ARMCC\Bin\..\include\stdlib.h
+nb\drv_can.o: ../User/VideoTransmitter/VideoTransmitter.h
+nb\drv_can.o: ../User/Judge_system/referee_protocol.h

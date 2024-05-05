@@ -62,3 +62,11 @@ nb\main.o: D:\Keil-APPINSTALL\ARM\ARMCC\Bin\..\include\stdio.h
 nb\main.o: D:\Keil-APPINSTALL\ARM\ARMCC\Bin\..\include\stdlib.h
 nb\main.o: D:\Keil-APPINSTALL\ARM\ARMCC\Bin\..\include\string.h
 nb\main.o: ../Inc/gpio.h
+nb\main.o: ../bsp/bsp_dwt.h
+nb\main.o: ../bsp/drv_can.h
+nb\main.o: ../RTOS_TASK/struct_typedef.h
+nb\main.o: ../RTOS_TASK/chassis_task.h
+nb\main.o: ../User/Algorithm/pid.h
+nb\main.o: ../bsp/drv_can.h
+nb\main.o: ../User/RC_device/rc_potocal.h
+nb\main.o: ../bsp/drv_usart.h

@@ -119,25 +119,6 @@ typedef struct
     uint8_t key_count[3][16];
 } RC_ctrl_t;
 
-//uint16_t w_flag;
-//uint16_t s_flag;
-//uint16_t a_flag;
-//uint16_t d_flag;
-//uint16_t q_flag;
-//uint16_t e_flag;
-//uint16_t shift_flag;
-//uint16_t ctrl_flag;
-//uint8_t press_left;
-//uint8_t press_right;
-//uint16_t r_flag;
-//uint16_t f_flag;
-//uint16_t g_flag;
-//uint16_t z_flag;
-//uint16_t x_flag;
-//uint16_t c_flag;
-//uint16_t v_flag;
-//uint16_t b_flag;
-
 /* ------------------------- Internal Data ----------------------------------- */
 
 /**
@@ -160,6 +141,13 @@ RC_ctrl_t *RemoteControlInit(UART_HandleTypeDef *rc_usart_handle);
  * @return uint8_t 1:在线 0:离线
  */
 uint8_t RemoteControlIsOnline();
+
+/**
+ * @brief 遥控器数据解析
+ *
+ * @param sbus_buf 接收buffer
+ */
+void sbus_to_rc(const uint8_t *sbus_buf);
 
 
 #endif
