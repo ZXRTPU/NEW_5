@@ -66,9 +66,7 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan) // 接受中断�
   {
     uint8_t rx_data[8];
     HAL_CAN_GetRxMessage(hcan, CAN_RX_FIFO0, &rx_header, rx_data); // receive can1 data
-//    if (rx_header.StdId == 0x55)                                   // 上C向下C传IMU数据
-//    {
-//    }
+
 		
 		// 接收下DM传来的遥控器数据
     if (rx_header.StdId == 0x33) 
@@ -94,33 +92,8 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan) // 接受中断�
       rc_ctrl[TEMP].mouse.press_r = rx_data[5];               //!< Mouse Right Is Press ?
       rc_ctrl[TEMP].key[0].v = rx_data[6] | (rx_data[7] << 8);   //!< KeyBoard value
 
-      // Some flag of keyboard
-//      w_flag = (rx_data[6] & 0x01);
-//      s_flag = (rx_data[6] & 0x02);
-//      a_flag = (rx_data[6] & 0x04);
-//      d_flag = (rx_data[6] & 0x08);
-//      q_flag = (rx_data[6] & 0x40);
-//      e_flag = (rx_data[6] & 0x80);
-//      shift_flag = (rx_data[6] & 0x10);
-//      ctrl_flag = (rx_data[6] & 0x20);
-//      press_left = rc_ctrl[TEMP].mouse.press_l;
-//      press_right = rc_ctrl[TEMP].mouse.press_r;
-//      r_flag = rc_ctrl[TEMP].key[0].v & (0x00 | 0x01 << 8);
-//      f_flag = rc_ctrl[TEMP].key[0].v & (0x00 | 0x02 << 8);
-//      g_flag = rc_ctrl[TEMP].key[0].v & (0x00 | 0x04 << 8);
-//      z_flag = rc_ctrl[TEMP].key[0].v & (0x00 | 0x08 << 8);
-//      x_flag = rc_ctrl[TEMP].key[0].v & (0x00 | 0x10 << 8);
-//      c_flag = rc_ctrl[TEMP].key[0].v & (0x00 | 0x20 << 8);
-//      v_flag = rc_ctrl[TEMP].key[0].v & (0x00 | 0x40 << 8);
-//      b_flag = rc_ctrl[TEMP].key[0].v & (0x00 | 0x80 << 8);
     }
-		//接收下DM传来的底盘陀螺仪数据
-    if (rx_header.StdId == 0x35)
-    {
-      rc_ctrl[TEMP].rc.dial = ((rx_data[0] | (rx_data[1] << 8)) & 0x07ff) - RC_CH_VALUE_OFFSET;
-      Yaw_down = ((int16_t)((rx_data[2] << 8) | rx_data[3])) / 100.0f; // yaw
-    }
-		
+			
     // 云台YAW电机信息接收
     if (rx_header.StdId == 0x209) // 判断标识符，标识符为0x204+ID
     {
@@ -312,7 +285,7 @@ void can_remote(uint8_t sbus_buf[], uint32_t can_send_id, uint32_t len) // 调�
   while (HAL_CAN_GetTxMailboxesFreeLevel(&hcan2) == 0) // 等待邮箱空闲
   {
   }
-  HAL_CAN_AddTxMessage(&hcan2, &tx_header, sbus_buf, (uint32_t *)CAN_TX_MAILBOX0);
+  HAL_CAN_AddTxMessage(&hcan1, &tx_header, sbus_buf, (uint32_t *)CAN_TX_MAILBOX0);
 }
 
 //void can_remote(uint8_t sbus_buf[], uint8_t can_send_id) // 调用can来发送遥控器数据

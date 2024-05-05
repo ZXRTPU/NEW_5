@@ -65,25 +65,6 @@ static void sbus_to_rc(const uint8_t *sbus_buf)
 	  
 	  // 0：按键按下  1：ctrl+按下 2：shift+按下
 	  rc_ctrl[TEMP].key[0].v = sbus_buf[14] | (sbus_buf[15] << 8);	
-//		w_flag = (sbus_buf[14] & 0x01);
-//		s_flag = (sbus_buf[14] & 0x02);
-//		a_flag = (sbus_buf[14] & 0x04);
-//		d_flag = (sbus_buf[14] & 0x08);
-//		q_flag = (sbus_buf[14] & 0x40);
-//		e_flag = (sbus_buf[14] & 0x80);
-//		shift_flag = (sbus_buf[14] & 0x10);
-//		ctrl_flag = (sbus_buf[14] & 0x20);
-//		press_left =  rc_ctrl[TEMP].mouse.press_l;
-//		press_right =  rc_ctrl[TEMP].mouse.press_r;
-//		// HAL_GPIO_TogglePin( GPIOH, GPIO_PIN_11);
-//		r_flag = rc_ctrl[TEMP].key[0].v & (0x00 | 0x01 << 8);
-//		f_flag = rc_ctrl[TEMP].key[0].v & (0x00 | 0x02 << 8);
-//		g_flag = rc_ctrl[TEMP].key[0].v & (0x00 | 0x04 << 8);
-//		z_flag = rc_ctrl[TEMP].key[0].v & (0x00 | 0x08 << 8);
-//		x_flag = rc_ctrl[TEMP].key[0].v & (0x00 | 0x10 << 8);
-//		c_flag = rc_ctrl[TEMP].key[0].v & (0x00 | 0x20 << 8);
-//		v_flag = rc_ctrl[TEMP].key[0].v & (0x00 | 0x40 << 8);
-//		b_flag = rc_ctrl[TEMP].key[0].v & (0x00 | 0x80 << 8);
 
     if (rc_ctrl[TEMP].rc.switch_left)
     {
@@ -102,7 +83,7 @@ static void sbus_to_rc(const uint8_t *sbus_buf)
         }
         can_remote(temp_remote, 0x34,8);
 
-        // 零碎数据（yaw）,将云台C板的YAW发送到底盘DM
+        // 将云台C板的YAW发送到底盘DM
         temp_remote[0] = sbus_buf[16];
         temp_remote[1] = sbus_buf[17];
 
@@ -116,7 +97,7 @@ static void sbus_to_rc(const uint8_t *sbus_buf)
         temp_remote[6] = (uint8_t)vision_is_tracking;
         temp_remote[7] = friction_flag;
 
-        can_remote(temp_remote, 0x35,8);
+        can_remote(temp_remote, 0x55,8);
     }
 
 

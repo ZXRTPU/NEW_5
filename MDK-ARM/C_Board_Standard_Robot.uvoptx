@@ -253,37 +253,37 @@
         <Ww>
           <count>17</count>
           <WinNumber>1</WinNumber>
-          <ItemText>rc_ctrl.rc</ItemText>
+          <ItemText>Up_ins_yaw,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>18</count>
           <WinNumber>1</WinNumber>
-          <ItemText>Up_ins_yaw,0x0A</ItemText>
+          <ItemText>Down_ins_yaw_update,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>19</count>
           <WinNumber>1</WinNumber>
-          <ItemText>Down_ins_yaw_update,0x0A</ItemText>
+          <ItemText>supercap_flag</ItemText>
         </Ww>
         <Ww>
           <count>20</count>
           <WinNumber>1</WinNumber>
-          <ItemText>supercap_flag</ItemText>
+          <ItemText>speed,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>21</count>
           <WinNumber>1</WinNumber>
-          <ItemText>speed,0x0A</ItemText>
+          <ItemText>supercap_flag</ItemText>
         </Ww>
         <Ww>
           <count>22</count>
           <WinNumber>1</WinNumber>
-          <ItemText>supercap_flag</ItemText>
+          <ItemText>Hero_level,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>23</count>
           <WinNumber>1</WinNumber>
-          <ItemText>Hero_level,0x0A</ItemText>
+          <ItemText>rc_ctrl[0]</ItemText>
         </Ww>
       </WatchWindow1>
       <WatchWindow2>
@@ -352,7 +352,7 @@
 
   <Group>
     <GroupName>Application/MDK-ARM</GroupName>
-    <tvExp>0</tvExp>
+    <tvExp>1</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>
@@ -384,7 +384,7 @@
 
   <Group>
     <GroupName>Application/User</GroupName>
-    <tvExp>0</tvExp>
+    <tvExp>1</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>
@@ -1284,7 +1284,7 @@
 
   <Group>
     <GroupName>Bsp</GroupName>
-    <tvExp>0</tvExp>
+    <tvExp>1</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>
@@ -1852,7 +1852,7 @@
 
   <Group>
     <GroupName>User/miniPC</GroupName>
-    <tvExp>0</tvExp>
+    <tvExp>1</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>
@@ -1884,7 +1884,7 @@
 
   <Group>
     <GroupName>User/RC_device</GroupName>
-    <tvExp>0</tvExp>
+    <tvExp>1</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>
@@ -1940,7 +1940,7 @@
 
   <Group>
     <GroupName>User/VideoTransmitter</GroupName>
-    <tvExp>0</tvExp>
+    <tvExp>1</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>
