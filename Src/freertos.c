@@ -25,10 +25,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "Chassis_task.h"
-#include "rc_potocal.h"
-#include "stm32f4xx_it.h"
-#include "UI_task.h"
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -48,20 +45,26 @@
 
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN Variables */
-osThreadId Chassis_taskHandle;
-osThreadId UI_taskHandle;
 
 /* USER CODE END Variables */
 osThreadId TEMP_IMUHandle;
+osThreadId ChassistaskHandle;
+osThreadId ExchangetaskHandle;
+osThreadId GimbaltaskHandle;
+osThreadId UitaskHandle;
+osThreadId DaemontaskHandle;
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
-osThreadId LEDHandle;
-void led_task(void const * argument);
 
 /* USER CODE END FunctionPrototypes */
 
 void imu_temp_control_task(void const * argument);
+void Chassis_task(void const * argument);
+void Exchange_task(void const * argument);
+void Gimbal_task(void const * argument);
+void StartUITASK(void const * argument);
+void StartDAEMONTASK(void const * argument);
 
 extern void MX_USB_DEVICE_Init(void);
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
@@ -113,15 +116,28 @@ void MX_FREERTOS_Init(void) {
   osThreadDef(TEMP_IMU, imu_temp_control_task, osPriorityNormal, 0, 512);
   TEMP_IMUHandle = osThreadCreate(osThread(TEMP_IMU), NULL);
 
+  /* definition and creation of Chassistask */
+  osThreadDef(Chassistask, Chassis_task, osPriorityNormal, 0, 512);
+  ChassistaskHandle = osThreadCreate(osThread(Chassistask), NULL);
+
+  /* definition and creation of Exchangetask */
+  osThreadDef(Exchangetask, Exchange_task, osPriorityNormal, 0, 128);
+  ExchangetaskHandle = osThreadCreate(osThread(Exchangetask), NULL);
+
+  /* definition and creation of Gimbaltask */
+  osThreadDef(Gimbaltask, Gimbal_task, osPriorityNormal, 0, 512);
+  GimbaltaskHandle = osThreadCreate(osThread(Gimbaltask), NULL);
+
+  /* definition and creation of Uitask */
+  osThreadDef(Uitask, StartUITASK, osPriorityNormal, 0, 512);
+  UitaskHandle = osThreadCreate(osThread(Uitask), NULL);
+
+  /* definition and creation of Daemontask */
+  osThreadDef(Daemontask, StartDAEMONTASK, osPriorityNormal, 0, 128);
+  DaemontaskHandle = osThreadCreate(osThread(Daemontask), NULL);
+
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
-       osThreadDef(Chassistask, Chassis_task, osPriorityRealtime, 0, 512); // �����ƶ�����
-  Chassis_taskHandle = osThreadCreate(osThread(Chassistask), NULL);
-  osThreadDef(LED, led_task, osPriorityNormal, 0, 128);
- LEDHandle      = osThreadCreate(osThread(LED), NULL);
-
-   osThreadDef(UItask, UI_Task, osPriorityRealtime, 0, 1024);
-  UI_taskHandle = osThreadCreate(osThread(UItask), NULL);
   /* USER CODE END RTOS_THREADS */
 
 }
@@ -144,6 +160,96 @@ __weak void imu_temp_control_task(void const * argument)
     osDelay(1);
   }
   /* USER CODE END imu_temp_control_task */
+}
+
+/* USER CODE BEGIN Header_Chassis_task */
+/**
+* @brief Function implementing the Chassistask thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_Chassis_task */
+__weak void Chassis_task(void const * argument)
+{
+  /* USER CODE BEGIN Chassis_task */
+  /* Infinite loop */
+  for(;;)
+  {
+    osDelay(1);
+  }
+  /* USER CODE END Chassis_task */
+}
+
+/* USER CODE BEGIN Header_Exchange_task */
+/**
+* @brief Function implementing the Exchangetask thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_Exchange_task */
+__weak void Exchange_task(void const * argument)
+{
+  /* USER CODE BEGIN Exchange_task */
+  /* Infinite loop */
+  for(;;)
+  {
+    osDelay(1);
+  }
+  /* USER CODE END Exchange_task */
+}
+
+/* USER CODE BEGIN Header_Gimbal_task */
+/**
+* @brief Function implementing the Gimbaltask thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_Gimbal_task */
+__weak void Gimbal_task(void const * argument)
+{
+  /* USER CODE BEGIN Gimbal_task */
+  /* Infinite loop */
+  for(;;)
+  {
+    osDelay(1);
+  }
+  /* USER CODE END Gimbal_task */
+}
+
+/* USER CODE BEGIN Header_StartUITASK */
+/**
+* @brief Function implementing the Uitask thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_StartUITASK */
+void StartUITASK(void const * argument)
+{
+  /* USER CODE BEGIN StartUITASK */
+  /* Infinite loop */
+  for(;;)
+  {
+    osDelay(1);
+  }
+  /* USER CODE END StartUITASK */
+}
+
+/* USER CODE BEGIN Header_StartDAEMONTASK */
+/**
+* @brief Function implementing the Daemontask thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_StartDAEMONTASK */
+void StartDAEMONTASK(void const * argument)
+{
+  /* USER CODE BEGIN StartDAEMONTASK */
+  /* Infinite loop */
+  for(;;)
+  {
+    osDelay(1);
+  }
+  /* USER CODE END StartDAEMONTASK */
 }
 
 /* Private application code --------------------------------------------------*/

@@ -4,10 +4,10 @@ nb\referee_ui.o: D:\Keil-APPINSTALL\ARM\ARMCC\Bin\..\include\stdarg.h
 nb\referee_ui.o: D:\Keil-APPINSTALL\ARM\ARMCC\Bin\..\include\stdint.h
 nb\referee_ui.o: ..\User\Judge_system\referee_protocol.h
 nb\referee_ui.o: ..\User\Judge_system\rm_referee.h
-nb\referee_ui.o: ..\Inc\usart.h
-nb\referee_ui.o: ..\Inc\main.h
+nb\referee_ui.o: ../Inc/usart.h
+nb\referee_ui.o: ../Inc/main.h
 nb\referee_ui.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h
-nb\referee_ui.o: ..\Inc\stm32f4xx_hal_conf.h
+nb\referee_ui.o: ../Inc/stm32f4xx_hal_conf.h
 nb\referee_ui.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h
 nb\referee_ui.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h
 nb\referee_ui.o: ../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h
@@ -41,10 +41,10 @@ nb\referee_ui.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
 nb\referee_ui.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd.h
 nb\referee_ui.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_usb.h
 nb\referee_ui.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd_ex.h
-nb\referee_ui.o: ..\RTOS_TASK\robot_def.h
-nb\referee_ui.o: ..\bsp\drv_usart.h
+nb\referee_ui.o: ../RTOS_TASK/robot_def.h
+nb\referee_ui.o: ../bsp/drv_usart.h
 nb\referee_ui.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
-nb\referee_ui.o: ..\Inc\FreeRTOSConfig.h
+nb\referee_ui.o: ../Inc/FreeRTOSConfig.h
 nb\referee_ui.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
 nb\referee_ui.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h
 nb\referee_ui.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h

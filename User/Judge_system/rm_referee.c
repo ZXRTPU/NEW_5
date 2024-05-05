@@ -17,10 +17,17 @@
 #include "task.h"
 #include "cmsis_os.h"
 #include "bsp_usart.h"
+#include "daemon.h"
 #define RE_RX_BUFFER_SIZE 255u // 裁判系统接收缓冲区大小
 
 static USART_Instance *referee_usart_instance; // 裁判系统串口实例
+static Daemon_Instance *referee_daemon;		   // 裁判系统守护进程
 static referee_info_t referee_info;			   // 裁判系统数据
+
+referee_infantry_t referee_infantry; // 裁判系统英雄机器人数据
+
+// 读取裁判系统数据到结构体
+static void judge_read();
 
 /**
  * @brief  读取裁判数据,中断中读取保证速度
@@ -148,4 +155,13 @@ void RefereeSend(uint8_t *send, uint16_t tx_len)
 {
 	USARTSend(referee_usart_instance, send, tx_len, USART_TRANSFER_DMA);
 	osDelay(115);
+}
+
+// 读取裁判系统数据到结构体
+static void judge_read()
+{
+	referee_infantry.robot_level = referee_info.GameRobotState.robot_level;
+	referee_infantry.chassis_power_limit = referee_info.GameRobotState.chassis_power_limit;
+	referee_infantry.chassis_power = referee_info.PowerHeatData.chassis_power;
+	referee_infantry.buffer_energy = referee_info.PowerHeatData.buffer_energy;
 }

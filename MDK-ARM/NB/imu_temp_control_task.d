@@ -1,10 +1,10 @@
 nb\imu_temp_control_task.o: ..\User\DM_BMI088\imu_temp_control_task.c
 nb\imu_temp_control_task.o: ..\User\DM_BMI088\imu_temp_control_task.h
-nb\imu_temp_control_task.o: ..\RTOS_TASK\struct_typedef.h
+nb\imu_temp_control_task.o: ../RTOS_TASK/struct_typedef.h
 nb\imu_temp_control_task.o: ..\User\DM_BMI088\BMI088driver.h
-nb\imu_temp_control_task.o: ..\Inc\main.h
+nb\imu_temp_control_task.o: ../Inc/main.h
 nb\imu_temp_control_task.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h
-nb\imu_temp_control_task.o: ..\Inc\stm32f4xx_hal_conf.h
+nb\imu_temp_control_task.o: ../Inc/stm32f4xx_hal_conf.h
 nb\imu_temp_control_task.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h
 nb\imu_temp_control_task.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h
 nb\imu_temp_control_task.o: ../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h
@@ -41,7 +41,7 @@ nb\imu_temp_control_task.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_usb
 nb\imu_temp_control_task.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd_ex.h
 nb\imu_temp_control_task.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h
 nb\imu_temp_control_task.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
-nb\imu_temp_control_task.o: ..\Inc\FreeRTOSConfig.h
+nb\imu_temp_control_task.o: ../Inc/FreeRTOSConfig.h
 nb\imu_temp_control_task.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
 nb\imu_temp_control_task.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h
 nb\imu_temp_control_task.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h
@@ -53,10 +53,10 @@ nb\imu_temp_control_task.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/t
 nb\imu_temp_control_task.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h
 nb\imu_temp_control_task.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h
 nb\imu_temp_control_task.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h
-nb\imu_temp_control_task.o: ..\User\Algorithm\pid.h
+nb\imu_temp_control_task.o: ../User/Algorithm/pid_imu.h
 nb\imu_temp_control_task.o: ..\User\DM_BMI088\bsp_imu_pwm.h
-nb\imu_temp_control_task.o: ..\EKF\imuekf.h
-nb\imu_temp_control_task.o: ..\EKF\rtwtypes.h
+nb\imu_temp_control_task.o: ../EKF/imuekf.h
+nb\imu_temp_control_task.o: ../EKF/rtwtypes.h
 nb\imu_temp_control_task.o: D:\Keil-APPINSTALL\ARM\ARMCC\Bin\..\include\stdbool.h
 nb\imu_temp_control_task.o: D:\Keil-APPINSTALL\ARM\ARMCC\Bin\..\include\stdlib.h
-nb\imu_temp_control_task.o: ..\bsp\bsp_dwt.h
+nb\imu_temp_control_task.o: ../bsp/bsp_dwt.h

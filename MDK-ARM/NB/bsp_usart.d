@@ -1,10 +1,10 @@
 nb\bsp_usart.o: ..\bsp\bsp_usart.c
 nb\bsp_usart.o: ..\bsp\bsp_usart.h
 nb\bsp_usart.o: D:\Keil-APPINSTALL\ARM\ARMCC\Bin\..\include\stdlib.h
-nb\bsp_usart.o: ..\Inc\usart.h
-nb\bsp_usart.o: ..\Inc\main.h
+nb\bsp_usart.o: ../Inc/usart.h
+nb\bsp_usart.o: ../Inc/main.h
 nb\bsp_usart.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h
-nb\bsp_usart.o: ..\Inc\stm32f4xx_hal_conf.h
+nb\bsp_usart.o: ../Inc/stm32f4xx_hal_conf.h
 nb\bsp_usart.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h
 nb\bsp_usart.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h
 nb\bsp_usart.o: ../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h

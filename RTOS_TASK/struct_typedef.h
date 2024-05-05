@@ -46,6 +46,7 @@ typedef struct
     fp32 error[3];
 
 } pid_struct_t;
+
 typedef struct
 {
     motor_info_t motor_info;     // 电机信息结构体
@@ -58,6 +59,37 @@ typedef struct
     fp32 err_angle;              // 云台电机的目标角度
 } gimbal_t;
 
+
+typedef struct
+{
+    float q[4]; // 四元数估计值
+
+    float Gyro[3];          // 角速度
+    float Accel[3];         // 加速度
+    float MotionAccel_b[3]; // 机体坐标加速度
+    float MotionAccel_n[3]; // 绝对系加速度
+
+    float AccelLPF; // 加速度低通滤波系数
+
+    // 加速度在绝对系的向量表示
+    float xn[3];
+    float yn[3];
+    float zn[3];
+
+    float atanxz;
+    float atanyz;
+
+    // 位姿
+    double Roll;
+    double Pitch;
+    double Yaw;
+		
+    double yaw_init;   // 初始化yaw的初始值
+    double yaw_update; // 使用这个得到真正的yaw值
+		
+    double YawTotalAngle;
+} INS_t;
+
 typedef struct
 {
     /* data */
@@ -66,6 +98,15 @@ typedef struct
     pid_struct_t pid[4];        // 底盘电机的pid结构体
     int16_t speed_target[4];    // 底盘电机的目标速度
     int16_t Vx, Vy, Wz;         // 底盘电机的目标速度
+	
+	  fp32 err_angle;             // 下板与上板的角度差
+    fp32 err_angle_rad;         // 下板与上板的角度差(弧度制)
+	
+    fp32 imu_err;               // 修正陀螺仪漂移量
+    
+	  /*底盘陀螺仪的数据*/
+	  INS_t INS;
+	  
 } chassis_t;
 
 typedef struct

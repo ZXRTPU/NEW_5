@@ -52,7 +52,7 @@ void MX_GPIO_Init(void)
   __HAL_RCC_GPIOD_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_13|LED_Pin|Power_OUT2_EN_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_13|LED_Pin|Power_OUT2_EN_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOB, SPI2_Gyro_CS_Pin|SPI2_Accel_CS_Pin, GPIO_PIN_RESET);
@@ -83,17 +83,8 @@ void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
-  HAL_NVIC_SetPriority(EXTI2_IRQn, 5, 0);
-  HAL_NVIC_EnableIRQ(EXTI2_IRQn);
-
-  HAL_NVIC_SetPriority(EXTI3_IRQn, 5, 0);
-  HAL_NVIC_EnableIRQ(EXTI3_IRQn);
 }
 
 /* USER CODE BEGIN 2 */
-  //   HAL_NVIC_SetPriority(EXTI2_IRQn, 5, 0);
-  // HAL_NVIC_EnableIRQ(EXTI2_IRQn);
 
-  // HAL_NVIC_SetPriority(EXTI3_IRQn, 5, 0);
-  // HAL_NVIC_EnableIRQ(EXTI3_IRQn);
 /* USER CODE END 2 */

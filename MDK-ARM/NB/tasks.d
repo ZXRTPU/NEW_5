@@ -4,7 +4,7 @@ nb\tasks.o: D:\Keil-APPINSTALL\ARM\ARMCC\Bin\..\include\string.h
 nb\tasks.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
 nb\tasks.o: D:\Keil-APPINSTALL\ARM\ARMCC\Bin\..\include\stddef.h
 nb\tasks.o: D:\Keil-APPINSTALL\ARM\ARMCC\Bin\..\include\stdint.h
-nb\tasks.o: ..\Inc\FreeRTOSConfig.h
+nb\tasks.o: ../Inc/FreeRTOSConfig.h
 nb\tasks.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
 nb\tasks.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h
 nb\tasks.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h

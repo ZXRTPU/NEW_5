@@ -1,8 +1,8 @@
 nb\can.o: ..\Src\can.c
-nb\can.o: ..\Inc\can.h
-nb\can.o: ..\Inc\main.h
+nb\can.o: ../Inc/can.h
+nb\can.o: ../Inc/main.h
 nb\can.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h
-nb\can.o: ..\Inc\stm32f4xx_hal_conf.h
+nb\can.o: ../Inc/stm32f4xx_hal_conf.h
 nb\can.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h
 nb\can.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h
 nb\can.o: ../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h

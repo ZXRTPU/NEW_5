@@ -2,7 +2,7 @@ nb\port.o: ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F/por
 nb\port.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
 nb\port.o: D:\Keil-APPINSTALL\ARM\ARMCC\Bin\..\include\stddef.h
 nb\port.o: D:\Keil-APPINSTALL\ARM\ARMCC\Bin\..\include\stdint.h
-nb\port.o: ..\Inc\FreeRTOSConfig.h
+nb\port.o: ../Inc/FreeRTOSConfig.h
 nb\port.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
 nb\port.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h
 nb\port.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h

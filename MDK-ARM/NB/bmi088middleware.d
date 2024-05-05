@@ -1,9 +1,9 @@
 nb\bmi088middleware.o: ..\User\DM_BMI088\BMI088Middleware.c
 nb\bmi088middleware.o: ..\User\DM_BMI088\BMI088Middleware.h
-nb\bmi088middleware.o: ..\RTOS_TASK\struct_typedef.h
-nb\bmi088middleware.o: ..\Inc\main.h
+nb\bmi088middleware.o: ../RTOS_TASK/struct_typedef.h
+nb\bmi088middleware.o: ../Inc/main.h
 nb\bmi088middleware.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h
-nb\bmi088middleware.o: ..\Inc\stm32f4xx_hal_conf.h
+nb\bmi088middleware.o: ../Inc/stm32f4xx_hal_conf.h
 nb\bmi088middleware.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h
 nb\bmi088middleware.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h
 nb\bmi088middleware.o: ../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h

@@ -3,7 +3,7 @@ nb\timers.o: D:\Keil-APPINSTALL\ARM\ARMCC\Bin\..\include\stdlib.h
 nb\timers.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
 nb\timers.o: D:\Keil-APPINSTALL\ARM\ARMCC\Bin\..\include\stddef.h
 nb\timers.o: D:\Keil-APPINSTALL\ARM\ARMCC\Bin\..\include\stdint.h
-nb\timers.o: ..\Inc\FreeRTOSConfig.h
+nb\timers.o: ../Inc/FreeRTOSConfig.h
 nb\timers.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
 nb\timers.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h
 nb\timers.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h

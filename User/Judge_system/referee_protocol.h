@@ -324,6 +324,23 @@ typedef struct
 	uint8_t radar_info;
 } radar_info_t;
 
+/* ID: 0x0302   Byte: 30    自定义控制器与机器人交互数据 */
+typedef struct
+{
+	uint8_t data[30];
+} custom_robot_data_t;
+
+/* ID: 0x0304   Byte: 12    图传链路键鼠遥控数据 */
+typedef struct
+{
+	int16_t mouse_x;
+	int16_t mouse_y;
+	int16_t mouse_z;
+	uint8_t left_button_down;
+	uint8_t right_button_down;
+	uint16_t keyboard_value;
+	uint16_t reserved;
+} remote_control_t;
 /****************************机器人交互数据****************************/
 /****************************机器人交互数据****************************/
 /* 发送的内容数据段最大为 113 检测是否超出大小限制?实际上图形段不会超，数据段最多30个，也不会超*/

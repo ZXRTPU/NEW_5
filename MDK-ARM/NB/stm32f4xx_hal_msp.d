@@ -1,7 +1,7 @@
 nb\stm32f4xx_hal_msp.o: ..\Src\stm32f4xx_hal_msp.c
-nb\stm32f4xx_hal_msp.o: ..\Inc\main.h
+nb\stm32f4xx_hal_msp.o: ../Inc/main.h
 nb\stm32f4xx_hal_msp.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h
-nb\stm32f4xx_hal_msp.o: ..\Inc\stm32f4xx_hal_conf.h
+nb\stm32f4xx_hal_msp.o: ../Inc/stm32f4xx_hal_conf.h
 nb\stm32f4xx_hal_msp.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h
 nb\stm32f4xx_hal_msp.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h
 nb\stm32f4xx_hal_msp.o: ../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h

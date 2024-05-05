@@ -24,6 +24,10 @@ typedef enum
     CHASSIS_FAST = 0, // 底盘转速快
     CHASSIS_MEDIUM,   // 底盘转速中等
     CHASSIS_SLOW,     // 底盘转速慢
+	  CHASSIS_ZERO_FORCE = 0,    // 电流零输入
+	  CHASSIS_GYRO,            // 小陀螺模式
+    CHASSIS_NO_FOLLOW,         // 不跟随，允许全向平移
+    CHASSIS_FOLLOW_GIMBAL_YAW, // 跟随模式，底盘叠加角度环控制
 } chassis_mode_e;
 
 // 云台模式设置
@@ -37,9 +41,10 @@ typedef enum
 // 发射模式设置
 typedef enum
 {
-    SHOOT_OFF = 0,
-    SHOOT_ON,
+    SHOOT_NORMAL = 0,
+    SHOOT_BUFF,
 } shoot_mode_e;
+
 typedef enum
 {
     FRICTION_OFF = 0, // 摩擦轮关闭
@@ -66,6 +71,18 @@ typedef struct
 { // 功率控制
     float chassis_power_mx;
 } Chassis_Power_Data_s;
+
+typedef enum
+{
+    SUPCAP_OFF = 0,
+    SUPCAP_ON,
+} supcap_mode_e;
+
+typedef enum
+{
+    TOP_LOW = 0,
+    TOP_HIGH,
+} top_mode_e;
 
 #pragma pack()
 

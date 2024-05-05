@@ -29,9 +29,6 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "bsp_dwt.h"
-#include "drv_can.h"
-#include "drv_usart.h"
 
 /* USER CODE END Includes */
 
@@ -75,6 +72,7 @@ static void MX_NVIC_Init(void);
   */
 int main(void)
 {
+
   /* USER CODE BEGIN 1 */
 
   /* USER CODE END 1 */
@@ -104,29 +102,26 @@ int main(void)
   MX_CAN2_Init();
   MX_USART3_UART_Init();
   MX_UART5_Init();
+  MX_TIM1_Init();
+  MX_TIM8_Init();
+  MX_TIM9_Init();
+  MX_USART1_UART_Init();
+  MX_USART6_UART_Init();
 
   /* Initialize interrupts */
   MX_NVIC_Init();
   /* USER CODE BEGIN 2 */
-      UART5_Init();
-      USART3_Init();
-    CAN1_Init();
-    CAN2_Init();
-    HAL_TIM_PWM_Start(&htim3,TIM_CHANNEL_1);//ä˝żč˝TIM3ĺŽćśĺ¨PWMčžĺş 
-  DWT_Init(168);
-      while(BMI088_init())
-    {
-        ;
-    }
+
   /* USER CODE END 2 */
 
-  /* Call init function for freertos objects (in freertos.c) */
+  /* Call init function for freertos objects (in cmsis_os2.c) */
   MX_FREERTOS_Init();
 
   /* Start scheduler */
   osKernelStart();
 
   /* We should never get here as control is now taken by the scheduler */
+
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
@@ -207,6 +202,27 @@ static void MX_NVIC_Init(void)
 /* USER CODE BEGIN 4 */
 
 /* USER CODE END 4 */
+
+/**
+  * @brief  Period elapsed callback in non blocking mode
+  * @note   This function is called  when TIM2 interrupt took place, inside
+  * HAL_TIM_IRQHandler(). It makes a direct call to HAL_IncTick() to increment
+  * a global variable "uwTick" used as application time base.
+  * @param  htim : TIM handle
+  * @retval None
+  */
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+{
+  /* USER CODE BEGIN Callback 0 */
+
+  /* USER CODE END Callback 0 */
+  if (htim->Instance == TIM2) {
+    HAL_IncTick();
+  }
+  /* USER CODE BEGIN Callback 1 */
+
+  /* USER CODE END Callback 1 */
+}
 
 /**
   * @brief  This function is executed in case of error occurrence.

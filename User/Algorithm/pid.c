@@ -30,7 +30,7 @@
   *                 PID_DELTA: ���PID
   * @param[in]      PID: 0: kp, 1: ki, 2:kd
   * @param[in]      max_out: pid������
-  * @param[in]      max_iout: pid���������
+  * @param[in]      max_iout: pid���������?
   * @retval         none
   */
 void PID_init(pid_type_def *pid, uint8_t mode, const fp32 PID[3], fp32 max_out, fp32 max_iout)
@@ -61,7 +61,7 @@ void PID_init(pid_type_def *pid, uint8_t mode, const fp32 PID[3], fp32 max_out, 
   * @param[out]     pid: PID�ṹ����ָ��
   * @param[in]      ref: ��������
   * @param[in]      set: �趨ֵ
-  * @retval         pid���
+  * @retval         pid���?
   */
 fp32 PID_calc(pid_type_def *pid, fp32 ref, fp32 set)
 {

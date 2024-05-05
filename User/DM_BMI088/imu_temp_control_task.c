@@ -2,7 +2,7 @@
 #include "BMI088driver.h"
 #include "cmsis_os.h"
 #include "main.h"
-#include "pid.h"
+#include "pid_imu.h"
 #include "bsp_imu_pwm.h"
 #include "imuekf.h"     
 #include "bsp_dwt.h"
@@ -62,7 +62,8 @@ void EarthFrameToBodyFrame(const float *vecEF, float *vecBF, double *q)
                        (0.5f - q[1] * q[1] - q[2] * q[2]) * vecEF[2]);
 }
 
-double yaw12,pitch12,roll12;
+//double yaw12,pitch12,roll12;
+extern chassis_t chassis;
 double INSAccelLPF;
 float INSMotionAccel_b[3];
 float INSMotionAccel_n[3];
@@ -98,14 +99,8 @@ void imu_temp_control_task(void const * argument)
 {
     osDelay(500);
     //pid init  PID初始化
-    PID_init(&imu_temp_pid, PID_POSITION, imu_temp_PID, TEMPERATURE_PID_MAX_OUT, TEMPERATURE_PID_MAX_IOUT);
+    PID_init_imu(&imu_temp_pid, PID_POSITION, imu_temp_PID, TEMPERATURE_PID_MAX_OUT, TEMPERATURE_PID_MAX_IOUT);
 
-    //bmi088 init. bmi088初始化
-    // while(BMI088_init())
-    // {
-    //     ;
-    // }
-    //set spi frequency
     hspi2.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_4;
     
     if (HAL_SPI_Init(&hspi2) != HAL_OK)
@@ -132,7 +127,7 @@ void imu_temp_control_task(void const * argument)
 
         uint16_t tempPWM;
         //pid calculate. PID计算
-        PID_calc(&imu_temp_pid, temp, 40.0f);
+        PID_calc_imu(&imu_temp_pid, temp, 40.0f);
 
         if (p[28] > 10000)
         {
@@ -143,7 +138,7 @@ void imu_temp_control_task(void const * argument)
             p[35] = 10000;
         }
 				
-        imuekf((double)gyro[0], (double)gyro[1], (double)gyro[2], (double)accel[0], (double)accel[1], (double)accel[2],p,qt,dt1,&yaw12,&pitch12,&roll12,qt); 
+        imuekf((double)gyro[0], (double)gyro[1], (double)gyro[2], (double)accel[0], (double)accel[1], (double)accel[2],p,qt,dt1,&chassis.INS.Yaw,&chassis.INS.Pitch,&chassis.INS.Roll,qt); 
         
 				apple++;
 				

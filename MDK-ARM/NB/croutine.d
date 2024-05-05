@@ -2,7 +2,7 @@ nb\croutine.o: ../Middlewares/Third_Party/FreeRTOS/Source/croutine.c
 nb\croutine.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
 nb\croutine.o: D:\Keil-APPINSTALL\ARM\ARMCC\Bin\..\include\stddef.h
 nb\croutine.o: D:\Keil-APPINSTALL\ARM\ARMCC\Bin\..\include\stdint.h
-nb\croutine.o: ..\Inc\FreeRTOSConfig.h
+nb\croutine.o: ../Inc/FreeRTOSConfig.h
 nb\croutine.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
 nb\croutine.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h
 nb\croutine.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h

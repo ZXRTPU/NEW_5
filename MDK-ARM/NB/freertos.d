@@ -2,7 +2,7 @@ nb\freertos.o: ..\Src\freertos.c
 nb\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
 nb\freertos.o: D:\Keil-APPINSTALL\ARM\ARMCC\Bin\..\include\stddef.h
 nb\freertos.o: D:\Keil-APPINSTALL\ARM\ARMCC\Bin\..\include\stdint.h
-nb\freertos.o: ..\Inc\FreeRTOSConfig.h
+nb\freertos.o: ../Inc/FreeRTOSConfig.h
 nb\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
 nb\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h
 nb\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h
@@ -10,9 +10,9 @@ nb\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F
 nb\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h
 nb\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h
 nb\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h
-nb\freertos.o: ..\Inc\main.h
+nb\freertos.o: ../Inc/main.h
 nb\freertos.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h
-nb\freertos.o: ..\Inc\stm32f4xx_hal_conf.h
+nb\freertos.o: ../Inc/stm32f4xx_hal_conf.h
 nb\freertos.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h
 nb\freertos.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h
 nb\freertos.o: ../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h
@@ -50,13 +50,3 @@ nb\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h
 nb\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h
 nb\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h
 nb\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h
-nb\freertos.o: ..\RTOS_TASK\Chassis_task.h
-nb\freertos.o: ..\RTOS_TASK\struct_typedef.h
-nb\freertos.o: ..\User\Algorithm\pid.h
-nb\freertos.o: ..\bsp\drv_can.h
-nb\freertos.o: ..\RTOS_TASK\chassis_task.h
-nb\freertos.o: ..\User\RC_device\rc_potocal.h
-nb\freertos.o: ..\Inc\gpio.h
-nb\freertos.o: ..\Inc\stm32f4xx_it.h
-nb\freertos.o: ..\RTOS_TASK\UI_task.h
-nb\freertos.o: D:\Keil-APPINSTALL\ARM\ARMCC\Bin\..\include\stdarg.h

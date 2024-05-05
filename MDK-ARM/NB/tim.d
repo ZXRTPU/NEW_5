@@ -1,8 +1,8 @@
 nb\tim.o: ..\Src\tim.c
-nb\tim.o: ..\Inc\tim.h
-nb\tim.o: ..\Inc\main.h
+nb\tim.o: ../Inc/tim.h
+nb\tim.o: ../Inc/main.h
 nb\tim.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h
-nb\tim.o: ..\Inc\stm32f4xx_hal_conf.h
+nb\tim.o: ../Inc/stm32f4xx_hal_conf.h
 nb\tim.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h
 nb\tim.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h
 nb\tim.o: ../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h

@@ -1,7 +1,7 @@
 nb\stm32f4xx_it.o: ..\Src\stm32f4xx_it.c
-nb\stm32f4xx_it.o: ..\Inc\main.h
+nb\stm32f4xx_it.o: ../Inc/main.h
 nb\stm32f4xx_it.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h
-nb\stm32f4xx_it.o: ..\Inc\stm32f4xx_hal_conf.h
+nb\stm32f4xx_it.o: ../Inc/stm32f4xx_hal_conf.h
 nb\stm32f4xx_it.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h
 nb\stm32f4xx_it.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h
 nb\stm32f4xx_it.o: ../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h
@@ -36,15 +36,4 @@ nb\stm32f4xx_it.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
 nb\stm32f4xx_it.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd.h
 nb\stm32f4xx_it.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_usb.h
 nb\stm32f4xx_it.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd_ex.h
-nb\stm32f4xx_it.o: ..\Inc\stm32f4xx_it.h
-nb\stm32f4xx_it.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
-nb\stm32f4xx_it.o: ..\Inc\FreeRTOSConfig.h
-nb\stm32f4xx_it.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
-nb\stm32f4xx_it.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h
-nb\stm32f4xx_it.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h
-nb\stm32f4xx_it.o: ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F/portmacro.h
-nb\stm32f4xx_it.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h
-nb\stm32f4xx_it.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h
-nb\stm32f4xx_it.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h
-nb\stm32f4xx_it.o: ..\bsp\drv_usart.h
-nb\stm32f4xx_it.o: ..\Inc\usart.h
+nb\stm32f4xx_it.o: ../Inc/stm32f4xx_it.h

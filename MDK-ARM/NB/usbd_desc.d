@@ -1,12 +1,12 @@
 nb\usbd_desc.o: ..\Src\usbd_desc.c
 nb\usbd_desc.o: ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_core.h
-nb\usbd_desc.o: ..\Inc\usbd_conf.h
+nb\usbd_desc.o: ../Inc/usbd_conf.h
 nb\usbd_desc.o: D:\Keil-APPINSTALL\ARM\ARMCC\Bin\..\include\stdio.h
 nb\usbd_desc.o: D:\Keil-APPINSTALL\ARM\ARMCC\Bin\..\include\stdlib.h
 nb\usbd_desc.o: D:\Keil-APPINSTALL\ARM\ARMCC\Bin\..\include\string.h
-nb\usbd_desc.o: ..\Inc\main.h
+nb\usbd_desc.o: ../Inc/main.h
 nb\usbd_desc.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h
-nb\usbd_desc.o: ..\Inc\stm32f4xx_hal_conf.h
+nb\usbd_desc.o: ../Inc/stm32f4xx_hal_conf.h
 nb\usbd_desc.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h
 nb\usbd_desc.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h
 nb\usbd_desc.o: ../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h
@@ -45,4 +45,4 @@ nb\usbd_desc.o: ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_def.h
 nb\usbd_desc.o: ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_ioreq.h
 nb\usbd_desc.o: ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_core.h
 nb\usbd_desc.o: ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_ctlreq.h
-nb\usbd_desc.o: ..\Inc\usbd_desc.h
+nb\usbd_desc.o: ../Inc/usbd_desc.h

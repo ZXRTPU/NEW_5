@@ -4,7 +4,7 @@ nb\cmsis_os.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h
 nb\cmsis_os.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
 nb\cmsis_os.o: D:\Keil-APPINSTALL\ARM\ARMCC\Bin\..\include\stddef.h
 nb\cmsis_os.o: D:\Keil-APPINSTALL\ARM\ARMCC\Bin\..\include\stdint.h
-nb\cmsis_os.o: ..\Inc\FreeRTOSConfig.h
+nb\cmsis_os.o: ../Inc/FreeRTOSConfig.h
 nb\cmsis_os.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
 nb\cmsis_os.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h
 nb\cmsis_os.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h

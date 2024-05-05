@@ -1,9 +1,9 @@
 nb\rm_referee.o: ..\User\Judge_system\rm_referee.c
 nb\rm_referee.o: ..\User\Judge_system\rm_referee.h
-nb\rm_referee.o: ..\Inc\usart.h
-nb\rm_referee.o: ..\Inc\main.h
+nb\rm_referee.o: ../Inc/usart.h
+nb\rm_referee.o: ../Inc/main.h
 nb\rm_referee.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h
-nb\rm_referee.o: ..\Inc\stm32f4xx_hal_conf.h
+nb\rm_referee.o: ../Inc/stm32f4xx_hal_conf.h
 nb\rm_referee.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h
 nb\rm_referee.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h
 nb\rm_referee.o: ../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h
@@ -39,10 +39,10 @@ nb\rm_referee.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd.h
 nb\rm_referee.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_usb.h
 nb\rm_referee.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd_ex.h
 nb\rm_referee.o: ..\User\Judge_system\referee_protocol.h
-nb\rm_referee.o: ..\RTOS_TASK\robot_def.h
-nb\rm_referee.o: ..\bsp\drv_usart.h
+nb\rm_referee.o: ../RTOS_TASK/robot_def.h
+nb\rm_referee.o: ../bsp/drv_usart.h
 nb\rm_referee.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
-nb\rm_referee.o: ..\Inc\FreeRTOSConfig.h
+nb\rm_referee.o: ../Inc/FreeRTOSConfig.h
 nb\rm_referee.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
 nb\rm_referee.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h
 nb\rm_referee.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h
@@ -57,5 +57,6 @@ nb\rm_referee.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h
 nb\rm_referee.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h
 nb\rm_referee.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h
 nb\rm_referee.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h
-nb\rm_referee.o: ..\bsp\bsp_usart.h
+nb\rm_referee.o: ../bsp/bsp_usart.h
 nb\rm_referee.o: D:\Keil-APPINSTALL\ARM\ARMCC\Bin\..\include\stdlib.h
+nb\rm_referee.o: ../User/Daemon/daemon.h

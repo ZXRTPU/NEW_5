@@ -1,24 +1,25 @@
 #include "drv_can.h"
-extern CAN_HandleTypeDef hcan1;
-extern CAN_HandleTypeDef hcan2;
-extern RC_ctrl_t rc_ctrl;
-uint16_t can_cnt_1 = 0;
-int16_t yy;
-int16_t Roll0;
-int16_t Pitch0;
-int16_t Yaw0;
-float Yaw1;
-// extern gimbal_t gimbal_Yaw, gimbal_Pitch;
-extern chassis_t chassis;
+#include "remote_control.h"
 #define RC_CH_VALUE_OFFSET ((uint16_t)1024)
 
-// extern shooter_t shooter;
+extern CAN_HandleTypeDef hcan1;
+extern CAN_HandleTypeDef hcan2;
+extern RC_ctrl_t rc_ctrl[2];
+extern chassis_t chassis;
+
+//接收上C板的陀螺仪数据
+int16_t UP_Roll;
+int16_t UP_Pitch;
+int16_t UP_Yaw;
+float gimbal_Yaw;
+float gimbal_Pitch;
+
+uint16_t can_cnt_1 = 0;
 
 float powerdata[4];
 uint16_t pPowerdata[8];
 
 uint8_t rx_data2[8];
-float Yaw_top;
 
 uint16_t setpower = 5500;
 int canerror = 0;
@@ -70,33 +71,18 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan) // 接受中断�
   if (hcan->Instance == CAN2)
   {
     uint8_t rx_data[8];
-    HAL_CAN_GetRxMessage(hcan, CAN_RX_FIFO0, &rx_header, rx_data); // receive can1 data
-    if (rx_header.StdId == 0x388)                                //IMU   // 上C向下C传IMU数据
-    {
-      Roll0= ((rx_data[1] << 8) | rx_data[0]);
-      Pitch0=((rx_data[3] << 8) | rx_data[2]);
-      Yaw0=((rx_data[5] << 8) | rx_data[4]);//下面的
-      Yaw1=Yaw0/100.00;//小数部分
-    }
+    HAL_CAN_GetRxMessage(hcan, CAN_RX_FIFO0, &rx_header, rx_data);
+		
+//		//接收上C板传来的YAW轴陀螺仪数据
+//    if (rx_header.StdId == 0x388)                               
+//    {
+//      UP_Roll= ((rx_data[1] << 8) | rx_data[0]);
+//      UP_Pitch=((rx_data[3] << 8) | rx_data[2]);
+//      UP_Yaw=((rx_data[5] << 8) | rx_data[4]);//下面的
+//      Gimbal_Yaw=UP_Yaw/100.00;//小数部分
+//    }
 
-    // 云台电机信息接收
-    // if (rx_header.StdId == 0x209) // 判断标识符，标识符为0x204+ID
-    // {
-    //   gimbal_Yaw.motor_info.rotor_angle = ((rx_data[0] << 8) | rx_data[1]);
-    //   gimbal_Yaw.motor_info.rotor_speed = ((rx_data[2] << 8) | rx_data[3]);
-    //   gimbal_Yaw.motor_info.torque_current = ((rx_data[4] << 8) | rx_data[5]);
-    //   gimbal_Yaw.motor_info.temp = rx_data[6];
-    // }
-
-    // // 云台电机信息接收
-    // if (rx_header.StdId == 0x20b) // 判断标识符，标识符为0x204+ID
-    // {
-    //   gimbal_Pitch.motor_info.rotor_angle = ((rx_data[0] << 8) | rx_data[1]);
-    //   gimbal_Pitch.motor_info.rotor_speed = ((rx_data[2] << 8) | rx_data[3]);
-    //   gimbal_Pitch.motor_info.torque_current = ((rx_data[4] << 8) | rx_data[5]);
-    //   gimbal_Pitch.motor_info.temp = rx_data[6];
-    // }
-    // 底盤电机信息接收
+    // 底盘电机信息接收
     if ((rx_header.StdId >= 0x201)     // 201-204
         && (rx_header.StdId <= 0x204)) // 判断标识符，标识符为0x200+ID
     {
@@ -111,46 +97,20 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan) // 接受中断�
       }
     }
   }
-  // 电机信息接收
+	
   if (hcan->Instance == CAN1)
   {
     uint8_t rx_data[8];
-    HAL_CAN_GetRxMessage(hcan, CAN_RX_FIFO0, &rx_header, rx_data); // receive can2 data
-        if (rx_header.StdId == 0x55) // 接收下C板传来的IMU数据
+    HAL_CAN_GetRxMessage(hcan, CAN_RX_FIFO0, &rx_header, rx_data); 
+    
+		// 接收上C板传来的陀螺仪数据
+		if (rx_header.StdId == 0x55) 
     {
-      Yaw_top = (int16_t)((rx_data[0] << 8) | rx_data[1]);   // yaw
-      // INS_bottom.Roll = (int16_t)((rx_data[2] << 8) | rx_data[3]);  // roll（roll和pitch根据c放置位置不同可能交换）
-      // INS_bottom.Pitch = (int16_t)((rx_data[4] << 8) | rx_data[5]); // pitch
-    }
-    // 發射機構电机信息接收
-    // if ((rx_header.StdId >= 0x205)     // 205-208
-    //     && (rx_header.StdId <= 0x208)) // 判断标识符，标识符为0x200+ID
-    // {
-    //   uint8_t index = rx_header.StdId - 0x205; // get motor index by can_id
-    //   shooter.motor_info[index].rotor_angle = ((rx_data[0] << 8) | rx_data[1]);
-    //   shooter.motor_info[index].rotor_speed = ((rx_data[2] << 8) | rx_data[3]);
-    //   shooter.motor_info[index].torque_current = ((rx_data[4] << 8) | rx_data[5]);
-    //   shooter.motor_info[index].temp = rx_data[6];
-    //   if (index == 0)
-    //   {
-    //     can_cnt_1++;
-    //   }
-    // }
-    // // 云台电机信息接收
-    // if (rx_header.StdId == 0x20b) // 判断标识符，标识符为0x204+ID
-    // {
-    //   gimbal_Pitch.motor_info.rotor_angle = ((rx_data[0] << 8) | rx_data[1]);
-    //   gimbal_Pitch.motor_info.rotor_speed = ((rx_data[2] << 8) | rx_data[3]);
-    //   gimbal_Pitch.motor_info.torque_current = ((rx_data[4] << 8) | rx_data[5]);
-    //   gimbal_Pitch.motor_info.temp = rx_data[6];
-    // }
-  if (rx_header.StdId == 0x35)                                   // 上C向下C传IMU数据
-    {
-            // rc_ctrl.rc.ch[4] = ((rx_data[0] | (rx_data[1] << 8)) & 0x07ff) - RC_CH_VALUE_OFFSET;
-
-            yy = (((rx_data[0] << 8) | rx_data[1])); // yaw
-           Yaw_top = yy / 100.0f;
-
+       UP_Roll= ((rx_data[1] << 8) | rx_data[0]);
+       UP_Pitch=((rx_data[3] << 8) | rx_data[2]);
+       UP_Yaw=((rx_data[5] << 8) | rx_data[4]);//下面的
+  		 gimbal_Yaw=UP_Yaw/100.00;//小数部分
+			 gimbal_Pitch = UP_Pitch/100.00;
     }
     
     if (rx_header.StdId == 0x211)
@@ -167,19 +127,22 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan) // 接受中断�
   }
 }
 
-void can_remote(uint8_t sbus_buf[], uint8_t can_send_id) // 调用can来发送遥控器数据
+// 向C板发送数据
+void can_remote(uint8_t sbus_buf[], uint32_t can_send_id, uint32_t len) // 调用can来发送遥控器数据
 {
   CAN_TxHeaderTypeDef tx_header;
 
-  tx_header.StdId = can_send_id; // 如果id_range==0则等于0x1ff,id_range==1则等于0x2ff（ID号）
-  tx_header.IDE = CAN_ID_STD;    // 标准帧
-  tx_header.RTR = CAN_RTR_DATA;  // 数据帧
-  tx_header.DLC = 8;             // 发送数据长度（字节）
-
-   HAL_CAN_AddTxMessage(&hcan1, &tx_header, sbus_buf, (uint32_t *)CAN_TX_MAILBOX0);
+  tx_header.StdId = can_send_id;                       // 如果id_range==0则等于0x1ff,id_range==1则等于0x2ff（ID号）
+  tx_header.IDE = CAN_ID_STD;                          // 标准帧
+  tx_header.RTR = CAN_RTR_DATA;                        // 数据帧
+  tx_header.DLC = len;                                   // 发送数据长度（字节）
+  while (HAL_CAN_GetTxMailboxesFreeLevel(&hcan2) == 0) // 等待邮箱空闲
+  {
+  }
+  HAL_CAN_AddTxMessage(&hcan1, &tx_header, sbus_buf, (uint32_t *)CAN_TX_MAILBOX0);
 }
 
-// 底盤電機控制
+// 底盘电机控制
 void set_motor_current_chassis(uint8_t id_range, int16_t v1, int16_t v2, int16_t v3, int16_t v4)
 {
   CAN_TxHeaderTypeDef tx_header;

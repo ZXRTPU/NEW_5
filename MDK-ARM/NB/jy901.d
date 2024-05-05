@@ -1,8 +1,8 @@
 nb\jy901.o: ..\User\DM_BMI088\JY901.c
 nb\jy901.o: ..\User\DM_BMI088\JY901.h
-nb\jy901.o: ..\Inc\main.h
+nb\jy901.o: ../Inc/main.h
 nb\jy901.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h
-nb\jy901.o: ..\Inc\stm32f4xx_hal_conf.h
+nb\jy901.o: ../Inc/stm32f4xx_hal_conf.h
 nb\jy901.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h
 nb\jy901.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h
 nb\jy901.o: ../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h

@@ -44,8 +44,8 @@ USART_Instance *USARTRegister(USART_Init_Config_s *init_config)
     USART_Instance *usart = (USART_Instance *)malloc(sizeof(USART_Instance));
     memset(usart, 0, sizeof(USART_Instance));
 
-    usart->usart_handle    = init_config->usart_handle;
-    usart->recv_buff_size  = init_config->recv_buff_size;
+    usart->usart_handle = init_config->usart_handle;
+    usart->recv_buff_size = init_config->recv_buff_size;
     usart->module_callback = init_config->module_callback;
 
     usart_instances[idx++] = usart;
@@ -66,25 +66,26 @@ USART_Instance *USARTRegister(USART_Init_Config_s *init_config)
  */
 void USARTSend(USART_Instance *_instance, uint8_t *send_buf, uint16_t send_size, USART_TRANSFER_MODE_e mode)
 {
-    switch (mode) {
-        case USART_TRANSFER_BLOCKING:
-            HAL_UART_Transmit(_instance->usart_handle, send_buf, send_size, 100);
-            break;
-        case USART_TRANSFER_IT:
-            HAL_UART_Transmit_IT(_instance->usart_handle, send_buf, send_size);
-            break;
-        case USART_TRANSFER_DMA:
-            HAL_UART_Transmit_DMA(_instance->usart_handle, send_buf, send_size);
-            break;
-        default:
-            break;
+    switch (mode)
+    {
+    case USART_TRANSFER_BLOCKING:
+        HAL_UART_Transmit(_instance->usart_handle, send_buf, send_size, 100);
+        break;
+    case USART_TRANSFER_IT:
+        HAL_UART_Transmit_IT(_instance->usart_handle, send_buf, send_size);
+        break;
+    case USART_TRANSFER_DMA:
+        HAL_UART_Transmit_DMA(_instance->usart_handle, send_buf, send_size);
+        break;
+    default:
+        break;
     }
 }
 
 /* 串口发送时,gstate会被设为BUSY_TX */
 uint8_t USARTIsReady(USART_Instance *_instance)
 {
-    if (_instance->usart_handle->gState | HAL_UART_STATE_BUSY_TX)
+    if (_instance->usart_handle->gState & HAL_UART_STATE_BUSY_TX)
         return 0;
     else
         return 1;
@@ -103,9 +104,12 @@ uint8_t USARTIsReady(USART_Instance *_instance)
  */
 void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size)
 {
-    for (uint8_t i = 0; i < idx; ++i) {                 // find the instance which is being handled
-        if (huart == usart_instances[i]->usart_handle) { // call the callback function if it is not NULL
-            if (usart_instances[i]->module_callback != NULL) {
+    for (uint8_t i = 0; i < idx; ++i)
+    { // find the instance which is being handled
+        if (huart == usart_instances[i]->usart_handle)
+        { // call the callback function if it is not NULL
+            if (usart_instances[i]->module_callback != NULL)
+            {
                 usart_instances[i]->module_callback();
                 memset(usart_instances[i]->recv_buff, 0, Size); // 接收结束后清空buffer,对于变长数据是必要的
             }
@@ -125,8 +129,10 @@ void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size)
  */
 void HAL_UART_ErrorCallback(UART_HandleTypeDef *huart)
 {
-    for (uint8_t i = 0; i < idx; ++i) {
-        if (huart == usart_instances[i]->usart_handle) {
+    for (uint8_t i = 0; i < idx; ++i)
+    {
+        if (huart == usart_instances[i]->usart_handle)
+        {
             HAL_UARTEx_ReceiveToIdle_DMA(usart_instances[i]->usart_handle, usart_instances[i]->recv_buff, usart_instances[i]->recv_buff_size);
             __HAL_DMA_DISABLE_IT(usart_instances[i]->usart_handle->hdmarx, DMA_IT_HT);
             return;

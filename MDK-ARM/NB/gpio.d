@@ -1,8 +1,8 @@
 nb\gpio.o: ..\Src\gpio.c
-nb\gpio.o: ..\Inc\gpio.h
-nb\gpio.o: ..\Inc\main.h
+nb\gpio.o: ../Inc/gpio.h
+nb\gpio.o: ../Inc/main.h
 nb\gpio.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h
-nb\gpio.o: ..\Inc\stm32f4xx_hal_conf.h
+nb\gpio.o: ../Inc/stm32f4xx_hal_conf.h
 nb\gpio.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h
 nb\gpio.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h
 nb\gpio.o: ../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h

@@ -3,7 +3,7 @@ nb\heap_4.o: D:\Keil-APPINSTALL\ARM\ARMCC\Bin\..\include\stdlib.h
 nb\heap_4.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
 nb\heap_4.o: D:\Keil-APPINSTALL\ARM\ARMCC\Bin\..\include\stddef.h
 nb\heap_4.o: D:\Keil-APPINSTALL\ARM\ARMCC\Bin\..\include\stdint.h
-nb\heap_4.o: ..\Inc\FreeRTOSConfig.h
+nb\heap_4.o: ../Inc/FreeRTOSConfig.h
 nb\heap_4.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
 nb\heap_4.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h
 nb\heap_4.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h

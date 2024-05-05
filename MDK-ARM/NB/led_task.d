@@ -1,11 +1,11 @@
 nb\led_task.o: ..\User\DM_BMI088\led_task.c
 nb\led_task.o: ..\User\DM_BMI088\led_task.h
-nb\led_task.o: ..\RTOS_TASK\struct_typedef.h
+nb\led_task.o: ../RTOS_TASK/struct_typedef.h
 nb\led_task.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h
 nb\led_task.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
 nb\led_task.o: D:\Keil-APPINSTALL\ARM\ARMCC\Bin\..\include\stddef.h
 nb\led_task.o: D:\Keil-APPINSTALL\ARM\ARMCC\Bin\..\include\stdint.h
-nb\led_task.o: ..\Inc\FreeRTOSConfig.h
+nb\led_task.o: ../Inc/FreeRTOSConfig.h
 nb\led_task.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
 nb\led_task.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h
 nb\led_task.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h
@@ -17,9 +17,9 @@ nb\led_task.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h
 nb\led_task.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h
 nb\led_task.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h
 nb\led_task.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h
-nb\led_task.o: ..\Inc\main.h
+nb\led_task.o: ../Inc/main.h
 nb\led_task.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h
-nb\led_task.o: ..\Inc\stm32f4xx_hal_conf.h
+nb\led_task.o: ../Inc/stm32f4xx_hal_conf.h
 nb\led_task.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h
 nb\led_task.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h
 nb\led_task.o: ../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h

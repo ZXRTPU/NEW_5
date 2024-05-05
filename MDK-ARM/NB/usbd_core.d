@@ -1,12 +1,12 @@
 nb\usbd_core.o: ../Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_core.c
 nb\usbd_core.o: ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_core.h
-nb\usbd_core.o: ..\Inc\usbd_conf.h
+nb\usbd_core.o: ../Inc/usbd_conf.h
 nb\usbd_core.o: D:\Keil-APPINSTALL\ARM\ARMCC\Bin\..\include\stdio.h
 nb\usbd_core.o: D:\Keil-APPINSTALL\ARM\ARMCC\Bin\..\include\stdlib.h
 nb\usbd_core.o: D:\Keil-APPINSTALL\ARM\ARMCC\Bin\..\include\string.h
-nb\usbd_core.o: ..\Inc\main.h
+nb\usbd_core.o: ../Inc/main.h
 nb\usbd_core.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h
-nb\usbd_core.o: ..\Inc\stm32f4xx_hal_conf.h
+nb\usbd_core.o: ../Inc/stm32f4xx_hal_conf.h
 nb\usbd_core.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h
 nb\usbd_core.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h
 nb\usbd_core.o: ../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h
