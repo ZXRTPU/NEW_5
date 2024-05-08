@@ -147,7 +147,7 @@ int main(void)
 //	HAL_NVIC_SetPriority(SysTick_IRQn,1,1);//调高HAL_Delay的时钟中断优先级
 	CAN1_Init();
   CAN2_Init();
-  USART6_Init();
+  //USART6_Init();
 	USART3_Init();
 	HAL_TIM_Base_Start_IT(&htim1);//开启定时器1并打开中断,记得修改优先级
   DWT_Init(168);

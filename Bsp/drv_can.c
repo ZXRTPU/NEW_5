@@ -102,6 +102,15 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan) // 接受中断�
       gimbal_Yaw.motor_info.torque_current = ((rx_data[4] << 8) | rx_data[5]);
       gimbal_Yaw.motor_info.temp = rx_data[6];
     }
+		
+//		    // 云台PITCH电机信息接收
+    if (rx_header.StdId == 0x20b) // 判断标识符，标识符为0x204+ID
+    {
+      gimbal_Pitch.motor_info.rotor_angle = ((rx_data[0] << 8) | rx_data[1]);
+      gimbal_Pitch.motor_info.rotor_speed = ((rx_data[2] << 8) | rx_data[3]);
+      gimbal_Pitch.motor_info.torque_current = ((rx_data[4] << 8) | rx_data[5]);
+      gimbal_Pitch.motor_info.temp = rx_data[6];
+    }
   }
 	
   if (hcan->Instance == CAN2)
@@ -135,13 +144,13 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan) // 接受中断�
       }
     }
     // 云台PITCH电机信息接收
-    if (rx_header.StdId == 0x20b) // 判断标识符，标识符为0x204+ID
-    {
-      gimbal_Pitch.motor_info.rotor_angle = ((rx_data[0] << 8) | rx_data[1]);
-      gimbal_Pitch.motor_info.rotor_speed = ((rx_data[2] << 8) | rx_data[3]);
-      gimbal_Pitch.motor_info.torque_current = ((rx_data[4] << 8) | rx_data[5]);
-      gimbal_Pitch.motor_info.temp = rx_data[6];
-    }
+//    if (rx_header.StdId == 0x20b) // 判断标识符，标识符为0x204+ID
+//    {
+//      gimbal_Pitch.motor_info.rotor_angle = ((rx_data[0] << 8) | rx_data[1]);
+//      gimbal_Pitch.motor_info.rotor_speed = ((rx_data[2] << 8) | rx_data[3]);
+//      gimbal_Pitch.motor_info.torque_current = ((rx_data[4] << 8) | rx_data[5]);
+//      gimbal_Pitch.motor_info.temp = rx_data[6];
+//    }
 
 		//超级电容信息接收
     if (rx_header.StdId == 0x211)

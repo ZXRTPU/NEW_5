@@ -105,8 +105,8 @@ static void mode_select()
 		// 图传链路
 		else
 		{
-			// 视觉控制
-			if (video_ctrl[TEMP].key_data.right_button_down == 1) // 按住右键
+			// 视觉控制-按住右键开启
+			if (video_ctrl[TEMP].key_data.right_button_down == 1) 
 			{
 				gimbal_vision_mode();
 			}
@@ -139,7 +139,7 @@ static void gimbal_current_give()
     {
         gimbal_Pitch.motor_info.set_current = pid_calc(&gimbal_Pitch.pid, gimbal_Pitch.motor_info.rotor_speed, gimbal_Pitch.speed_target);
     }
-	  set_motor_current_gimbal2(1, 0, 0, gimbal_Pitch.motor_info.set_current, 0);
+	  set_motor_current_gimbal(1, 0, 0, gimbal_Pitch.motor_info.set_current, 0);
 }
 
 //视觉控制云台模式
@@ -211,12 +211,12 @@ static void yaw_lock_mode()
 
 		// 遥控器链路
 		if (rc_ctrl[TEMP].rc.switch_right)
+
 		{
 			// 使用非线性映射函数调整灵敏度
 			float normalized_input = rc_ctrl[TEMP].rc.rocker_r_ / 660.0f + rc_ctrl[TEMP].mouse.x / 16384.0f * 100;
 			gimbal_Yaw.angle_target -= pow(fabs(normalized_input), 0.97) * sign(normalized_input) * 0.3;
 		}
-
 		// 图传链路
 		else
 		{
@@ -226,7 +226,7 @@ static void yaw_lock_mode()
 		}
 
 		detel_calc(&gimbal_Yaw.angle_target);
-		gimbal_Yaw.speed_target = gimbal_Yaw_PID_calc(&gimbal_Yaw.pid_vision, INS.yaw_update, gimbal_Yaw.angle_target);
+		gimbal_Yaw.speed_target = gimbal_Yaw_PID_calc(&gimbal_Yaw.pid_angle, INS.yaw_update, gimbal_Yaw.angle_target);
 
 }
 

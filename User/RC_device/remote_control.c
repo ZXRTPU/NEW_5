@@ -66,39 +66,39 @@ static void sbus_to_rc(const uint8_t *sbus_buf)
 	  // 0：按键按下  1：ctrl+按下 2：shift+按下
 	  rc_ctrl[TEMP].key[0].v = sbus_buf[14] | (sbus_buf[15] << 8);	
 
-    if (rc_ctrl[TEMP].rc.switch_left)
-    {
-        // CAN发送遥控器数据给下C板
-        // 遥控器数据
-        for (int i = 0; i <= 7; i++)
-        {
-            temp_remote[i] = sbus_buf[i]; // volatile const uint8_t和uint8_t不一样不能直接带入can_remote这个函数
-        }
-        can_remote(temp_remote, 0x33,8);
+//    if (rc_ctrl[TEMP].rc.switch_left)
+//    {
+//        // CAN发送遥控器数据给下C板
+//        // 遥控器数据
+//        for (int i = 0; i <= 7; i++)
+//        {
+//            temp_remote[i] = sbus_buf[i]; // volatile const uint8_t和uint8_t不一样不能直接带入can_remote这个函数
+//        }
+//        can_remote(temp_remote, 0x33,8);
 
-        // 键鼠数据
-        for (int i = 8; i <= 15; i++)
-        {
-            temp_remote[i - 8] = sbus_buf[i]; // volatile const uint8_t和uint8_t不一样不能直接带入can_remote这个函数
-        }
-        can_remote(temp_remote, 0x34,8);
+//        // 键鼠数据
+//        for (int i = 8; i <= 15; i++)
+//        {
+//            temp_remote[i - 8] = sbus_buf[i]; // volatile const uint8_t和uint8_t不一样不能直接带入can_remote这个函数
+//        }
+//        can_remote(temp_remote, 0x34,8);
 
-        // 将云台C板的YAW发送到底盘DM
-        temp_remote[0] = sbus_buf[16];
-        temp_remote[1] = sbus_buf[17];
+//        // 将云台C板的YAW发送到底盘DM
+//        temp_remote[0] = sbus_buf[16];
+//        temp_remote[1] = sbus_buf[17];
 
-        gimbal_yaw = 50 * INS.Yaw; // 使之接收带上小数点
-        gimbal_pitch = 50 * INS.Roll;
+//        gimbal_yaw = 50 * INS.Yaw; // 使之接收带上小数点
+//        gimbal_pitch = 50 * INS.Roll;
 
-        temp_remote[2] = (gimbal_yaw >> 8) & 0xff;
-        temp_remote[3] = gimbal_yaw & 0xff;
-        temp_remote[4] = (gimbal_pitch >> 8) & 0xff;
-        temp_remote[5] = gimbal_pitch & 0xff;
-        temp_remote[6] = (uint8_t)vision_is_tracking;
-        temp_remote[7] = friction_flag;
+//        temp_remote[2] = (gimbal_yaw >> 8) & 0xff;
+//        temp_remote[3] = gimbal_yaw & 0xff;
+//        temp_remote[4] = (gimbal_pitch >> 8) & 0xff;
+//        temp_remote[5] = gimbal_pitch & 0xff;
+//        temp_remote[6] = (uint8_t)vision_is_tracking;
+//        temp_remote[7] = friction_flag;
 
-        can_remote(temp_remote, 0x55,8);
-    }
+//        can_remote(temp_remote, 0x55,8);
+//    }
 
 
     // 位域的按键值解算,直接memcpy即可,注意小端低字节在前,即lsb在第一位,msb在最后
